@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 const Client: React.FC = () => {
   const clients = [

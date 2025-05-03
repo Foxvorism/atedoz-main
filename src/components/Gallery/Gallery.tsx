@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Modal } from "../modal"; // Mengimpor Modal
 import { useModal } from "@/hooks/useModal"; // Menggunakan hook untuk mengelola modal
+import Image from "next/image";
 
 interface Photo {
   id: number;

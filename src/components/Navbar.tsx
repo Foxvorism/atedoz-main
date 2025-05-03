@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation"; // Import usePathname untuk mendeteksi path aktif
+import Image from "next/image";
 
 const Navbar: React.FC = () => {
   const navigation = [
