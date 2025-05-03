@@ -52,6 +52,9 @@ const Event: React.FC = () => {
                 // onClick={() => handleEventClick(event)} // Handle click event for first modal
               >
                 <Image
+                  layout="intrinsic"
+                  width={100} // Tentukan ukuran gambar
+                  height={100} // Tentukan ukuran gambar
                   src={event.url}
                   alt={event.alt}
                   className="aspect-video w-full object-cover cursor-pointer"

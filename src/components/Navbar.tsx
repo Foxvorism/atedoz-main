@@ -36,14 +36,17 @@ const Navbar: React.FC = () => {
         <nav className="flex justify-between items-center w-[92%] mx-auto">
           <div>
             <Image
+              layout="intrinsic"
+              width={100} // Tentukan ukuran gambar
+              height={0} // Tentukan ukuran gambar
               className="lg:w-[100px] cursor-pointer"
-              src="img/logo-atedoz.png"
+              src="/img/logo-atedoz.png"
               alt="logo"
             />
           </div>
           <div
             className={`${
-              menuOpen ? "top-[20%]" : "top-[-100%]"
+              menuOpen ? "top-[50%]" : "top-[-100%]"
             } nav-links duration-500 md:static absolute bg-white md:min-h-fit min-h-[60vh] left-0 flex items-center px-5 md:w-auto w-full`}
           >
             <ul className="flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-4">

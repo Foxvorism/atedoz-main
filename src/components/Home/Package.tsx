@@ -6,28 +6,28 @@ const Package: React.FC = () => {
       id: 1,
       name: "package 1",
       price: "200k/hour",
-      img: "img/home/package1.png",
+      img: "/img/home/package1.png",
       alt: "homepackage1",
     },
     {
       id: 2,
       name: "package 2",
       price: "200k/hour",
-      img: "img/home/package2.png",
+      img: "/img/home/package2.png",
       alt: "homepackage2",
     },
     {
       id: 3,
       name: "package 3",
       price: "200k/hour",
-      img: "img/home/package3.png",
+      img: "/img/home/package3.png",
       alt: "homepackage3",
     },
     {
       id: 4,
       name: "package 4",
       price: "200k/hour",
-      img: "img/home/package4.png",
+      img: "/img/home/package4.png",
       alt: "homepackage4",
     },
   ];
@@ -35,7 +35,7 @@ const Package: React.FC = () => {
   return (
     <>
       <div className="flex justify-center items-center p-14">
-        <div className="text-center">
+        <div className="text-center w-full">
           <h2 className="font-bold text-3xl mb-10">Paket Unggulan Kami</h2>
 
           <div className="px-[20vw] mb-10">
@@ -47,9 +47,12 @@ const Package: React.FC = () => {
                   // onClick={() => handlePhotoClick(photo)} // Handle click event for first modal
                 >
                   <Image
+                    layout="responsive"
+                    width={400} // Tentukan ukuran gambar
+                    height={0} // Tentukan ukuran gambar
                     src={packages.img}
                     alt={packages.alt}
-                    className="aspect-[4/3] object-cover"
+                    className="aspect-[4/3] w-full object-cover"
                   />
 
                   <div className="p-8 text-left truncate">

@@ -3,9 +3,9 @@ import Image from "next/image";
 
 const Event: React.FC = () => {
   const event = [
-    { id: 1, img: "img/home/event1.png", alt: "event 1" },
-    { id: 2, img: "img/home/event2.png", alt: "event 2" },
-    { id: 3, img: "img/home/event3.png", alt: "event 3" },
+    { id: 1, img: "/img/home/event1.png", alt: "event 1" },
+    { id: 2, img: "/img/home/event2.png", alt: "event 2" },
+    { id: 3, img: "/img/home/event3.png", alt: "event 3" },
   ];
 
   return (
@@ -21,9 +21,12 @@ const Event: React.FC = () => {
             {event.map((event) => (
               <div className="flex-shrink-0" key={event.id}>
                 <Image
+                  layout="intrinsic" // Menggunakan layout intrinsic agar width menyesuaikan dengan height
+                  width={600} // Tentukan lebar gambar sebagai referensi rasio
+                  height={325} // Tentukan tinggi gambar, width akan menyesuaikan
                   src={event.img}
                   alt={event.alt}
-                  className="h-[30rem] object-cover rounded-lg"
+                  className="w-full h-auto object-cover rounded-lg" // Lebar 100% dan tinggi otomatis
                 />
               </div>
             ))}

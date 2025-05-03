@@ -39,7 +39,7 @@ const Gallery: React.FC<GalleryProps> = ({ photos }) => {
         <h2 className="text-base font-medium mb-10">
           Berikut adalah foto-foto yang diambil di studio Atedoz Space
         </h2>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center w-full">
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5">
             {sortedPhotos.map((photo) => (
               <div
@@ -48,6 +48,9 @@ const Gallery: React.FC<GalleryProps> = ({ photos }) => {
                 onClick={() => handlePhotoClick(photo)} // Menangani klik gambar
               >
                 <Image
+                  layout="responsive"
+                  width={500} // Tentukan ukuran gambar
+                  height={500} // Tentukan ukuran gambar
                   src={photo.url}
                   alt={photo.alt}
                   className="aspect-square w-full h-full object-cover cursor-pointer"
@@ -67,6 +70,9 @@ const Gallery: React.FC<GalleryProps> = ({ photos }) => {
         >
           <div className="w-full">
             <Image
+              layout="intrinsic"
+              width={100} // Tentukan ukuran gambar
+              height={100} // Tentukan ukuran gambar
               src={selectedPhoto.url}
               alt={selectedPhoto.alt}
               className="rounded-xl object-cover aspect-square"

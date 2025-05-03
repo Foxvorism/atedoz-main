@@ -9,7 +9,10 @@ const Footer: React.FC = () => {
           <div className="px-10">
             <div className="flex justify-center items-center">
               <Image
-                src="img/logo-atedoz.png"
+                layout="intrinsic"
+                width={100} // Tentukan ukuran gambar
+                height={100} // Tentukan ukuran gambar
+                src="/img/logo-atedoz.png"
                 alt="logo atedoz"
                 className="w-32 mb-7"
               />
@@ -33,7 +36,14 @@ const Footer: React.FC = () => {
               rel="noopener noreferrer"
             >
               <div className="flex items-center mb-3 cursor-pointer hover:text-gray-500">
-                <Image className="mr-2 w-5" src="icon/ig.svg" alt="ig" />
+                <Image
+                  layout="intrinsic"
+                  width={100} // Tentukan ukuran gambar
+                  height={100} // Tentukan ukuran gambar
+                  className="mr-2 w-5"
+                  src="/icon/ig.svg"
+                  alt="ig"
+                />
                 <h2 className="text-lg font-bold">Instagram</h2>
               </div>
             </Link>
@@ -43,7 +53,14 @@ const Footer: React.FC = () => {
               rel="noopener noreferrer"
             >
               <div className="flex items-center mb-3 cursor-pointer hover:text-gray-500">
-                <Image className="mr-2 w-5" src="icon/tiktok.svg" alt="ig" />
+                <Image
+                  layout="intrinsic"
+                  width={100} // Tentukan ukuran gambar
+                  height={100} // Tentukan ukuran gambar
+                  className="mr-2 w-5"
+                  src="/icon/tiktok.svg"
+                  alt="ig"
+                />
                 <h2 className="text-lg font-bold">Tiktok</h2>
               </div>
             </Link>
@@ -53,7 +70,14 @@ const Footer: React.FC = () => {
               rel="noopener noreferrer"
             >
               <div className="flex items-center mb-3 cursor-pointer hover:text-gray-500">
-                <Image className="mr-2 w-5" src="icon/wa.svg" alt="ig" />
+                <Image
+                  layout="intrinsic"
+                  width={100} // Tentukan ukuran gambar
+                  height={100} // Tentukan ukuran gambar
+                  className="mr-2 w-5"
+                  src="/icon/wa.svg"
+                  alt="ig"
+                />
                 <h2 className="text-lg font-bold">Whatsapp</h2>
               </div>
             </Link>
@@ -94,7 +118,10 @@ const Footer: React.FC = () => {
         </div>
         <div className="py-2 flex justify-center text-sm">
           <Image
-            src="icon/copyright.svg"
+            layout="intrinsic"
+            width={100} // Tentukan ukuran gambar
+            height={100} // Tentukan ukuran gambar
+            src="/icon/copyright.svg"
             alt="copyright"
             className="w-4 mr-2"
           />

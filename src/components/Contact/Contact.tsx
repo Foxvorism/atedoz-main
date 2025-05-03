@@ -52,6 +52,9 @@ const Contact: React.FC = () => {
                 <div className="bg-[var(--color-black-2)] py-10 rounded-lg cursor-pointer hover:scale-[103%]">
                   <div className="flex justify-center">
                     <Image
+                      layout="intrinsic"
+                      width={60} // Tentukan ukuran gambar
+                      height={60} // Tentukan ukuran gambar
                       src={contact.logo}
                       alt={contact.name}
                       className="h-15 mb-8"

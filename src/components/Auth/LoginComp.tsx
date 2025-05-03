@@ -28,6 +28,9 @@ const LoginComp: React.FC = () => {
           <div className="w-full">
             <div className="flex justify-center item-center">
               <Image
+                layout="intrinsic"
+                width={100} // Tentukan ukuran gambar
+                height={100} // Tentukan ukuran gambar
                 src="/img/logo-atedoz.png"
                 alt="logo atedoz"
                 className="w-[12rem] mb-10"
