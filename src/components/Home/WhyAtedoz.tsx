@@ -49,7 +49,7 @@ const WhyAtedoz: React.FC = () => {
             {why.map((why) => (
               <div key={why.id}>
                 <div className="flex justify-center items-center">
-                  <img src={why.icon} alt={why.alt} className="mb-3" />
+                  <Image src={why.icon} alt={why.alt} className="mb-3" />
                 </div>
                 <div className="flex justify-center items-center">
                   <p className="font-semibold text-lg w-32">{why.desc}</p>

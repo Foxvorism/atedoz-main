@@ -46,7 +46,7 @@ const Gallery: React.FC<GalleryProps> = ({ photos }) => {
                 className="relative w-full bg-gray-100 rounded-lg overflow-hidden hover:scale-[102%]"
                 onClick={() => handlePhotoClick(photo)} // Menangani klik gambar
               >
-                <img
+                <Image
                   src={photo.url}
                   alt={photo.alt}
                   className="aspect-square w-full h-full object-cover cursor-pointer"
@@ -65,7 +65,7 @@ const Gallery: React.FC<GalleryProps> = ({ photos }) => {
           className="lg:max-w-[45vw] max-w-[80vw]"
         >
           <div className="w-full">
-            <img
+            <Image
               src={selectedPhoto.url}
               alt={selectedPhoto.alt}
               className="rounded-xl object-cover aspect-square"

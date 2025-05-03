@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 const Event: React.FC = () => {
   const event = [
@@ -19,7 +20,7 @@ const Event: React.FC = () => {
           <div className="w-[60vw] flex overflow-x-auto space-x-5 py-4">
             {event.map((event) => (
               <div className="flex-shrink-0" key={event.id}>
-                <img
+                <Image
                   src={event.img}
                   alt={event.alt}
                   className="h-[30rem] object-cover rounded-lg"

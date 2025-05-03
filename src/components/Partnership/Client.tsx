@@ -18,7 +18,7 @@ const Client: React.FC = () => {
               key={clinet.id}
               className="relative w-full bg-gray-100 rounded-lg overflow-hidden hover:scale-[102%]"
             >
-              <img
+              <Image
                 src={clinet.img}
                 alt={clinet.alt}
                 className="aspect-square w-full h-full object-cover scale-[104%] bg-center cursor-pointer"
