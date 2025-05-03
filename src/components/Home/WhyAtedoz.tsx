@@ -51,7 +51,14 @@ const WhyAtedoz: React.FC = () => {
             {why.map((why) => (
               <div key={why.id}>
                 <div className="flex justify-center items-center">
-                  <Image src={why.icon} alt={why.alt} className="mb-3" />
+                  <Image
+                    layout="intrinsic"
+                    width={50} // Tentukan ukuran gambar
+                    height={0} // Tentukan ukuran gambar
+                    src={why.icon}
+                    alt={why.alt}
+                    className="mb-3"
+                  />
                 </div>
                 <div className="flex justify-center items-center">
                   <p className="font-semibold text-lg w-32">{why.desc}</p>

@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    domains: ["plus.unsplash.com", "images.unsplash.com"], // Menambahkan domain yang diizinkan untuk digunakan dengan Image Next.js
+  },
 };
 
 export default nextConfig;

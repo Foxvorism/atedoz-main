@@ -20,6 +20,9 @@ const Client: React.FC = () => {
               className="relative w-full bg-gray-100 rounded-lg overflow-hidden hover:scale-[102%]"
             >
               <Image
+                layout="intrinsic"
+                width={100} // Tentukan ukuran gambar
+                height={100} // Tentukan ukuran gambar
                 src={clinet.img}
                 alt={clinet.alt}
                 className="aspect-square w-full h-full object-cover scale-[104%] bg-center cursor-pointer"
