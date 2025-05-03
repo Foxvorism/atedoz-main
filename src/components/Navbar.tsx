@@ -34,7 +34,7 @@ const Navbar: React.FC = () => {
       >
         <nav className="flex justify-between items-center w-[92%] mx-auto">
           <div>
-            <img
+            <Image
               className="lg:w-[100px] cursor-pointer"
               src="img/logo-atedoz.png"
               alt="logo"

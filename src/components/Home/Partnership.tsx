@@ -21,7 +21,7 @@ const Partnership: React.FC = () => {
               </div>
             </div>
             <div className="">
-              <img src="img/home/partnership.png" alt="partnership" />
+              <Image src="img/home/partnership.png" alt="partnership" />
             </div>
           </div>
         </div>

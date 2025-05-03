@@ -30,7 +30,7 @@ const Photobooth: React.FC = () => {
                   className="relative w-full rounded-lg overflow-hidden"
                   // onClick={() => handlePhotoClick(photo)} // Handle click event for first modal
                 >
-                  <img
+                  <Image
                     src={photo.src}
                     alt={photo.alt}
                     className="aspect-square w-full h-full object-fit"
@@ -42,14 +42,14 @@ const Photobooth: React.FC = () => {
 
           {/* <div className="flex justify-center items-center gap-10">
             <div className="w-[35vw] h-[35vh] bg-white p-2 flex justify-center items-center">
-              <img
+              <Image
                 src="img/HomePhotobooth1.png"
                 alt="HomePhotobooth1"
                 className="w-auto"
               />
             </div>
             <div className="w-[35vw] h-[35vh] bg-white p-2 flex justify-center items-center">
-              <img
+              <Image
                 src="img/HomePhotobooth2.png"
                 alt="img/HomePhotobooth2.png"
                 className="w-full"

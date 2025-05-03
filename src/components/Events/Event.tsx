@@ -53,7 +53,7 @@ const Event: React.FC = () => {
                 className="relative w-full bg-gray-100 rounded-lg overflow-hidden hover:scale-[102%]"
                 // onClick={() => handleEventClick(event)} // Handle click event for first modal
               >
-                <img
+                <Image
                   src={event.url}
                   alt={event.alt}
                   className="aspect-video w-full object-cover cursor-pointer"

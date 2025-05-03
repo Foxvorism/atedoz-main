@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const Package: React.FC = () => {
   const packages = [
     {
@@ -44,7 +46,7 @@ const Package: React.FC = () => {
                   className="relative w-full rounded-xl overflow-hidden bg-[var(--color-gray-1)]"
                   // onClick={() => handlePhotoClick(photo)} // Handle click event for first modal
                 >
-                  <img
+                  <Image
                     src={packages.img}
                     alt={packages.alt}
                     className="aspect-[4/3] object-cover"

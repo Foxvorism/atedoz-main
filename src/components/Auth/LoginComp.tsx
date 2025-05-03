@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { EyeIcon, EyeCloseIcon } from "@/icons";
+// import { EyeIcon, EyeCloseIcon } from "@/icons";
 
 const LoginComp: React.FC = () => {
   return (
@@ -26,7 +26,7 @@ const LoginComp: React.FC = () => {
 
           <div className="w-full">
             <div className="flex justify-center item-center">
-              <img
+              <Image
                 src="/img/logo-atedoz.png"
                 alt="logo atedoz"
                 className="w-[12rem] mb-10"

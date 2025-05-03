@@ -50,7 +50,7 @@ const Contact: React.FC = () => {
               >
                 <div className="bg-[var(--color-black-2)] py-10 rounded-lg cursor-pointer hover:scale-[103%]">
                   <div className="flex justify-center">
-                    <img
+                    <Image
                       src={contact.logo}
                       alt={contact.name}
                       className="h-15 mb-8"
