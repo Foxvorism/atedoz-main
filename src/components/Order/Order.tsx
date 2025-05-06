@@ -97,9 +97,9 @@ const OrderForm: React.FC = () => {
                   <option value="" disabled selected>
                     Pilih akhir waktu
                   </option>
-                  {start_time.map((start) => (
-                    <option key={start.id} value={start.value}>
-                      {start.label}
+                  {end_time.map((end) => (
+                    <option key={end.id} value={end.value}>
+                      {end.label}
                     </option>
                   ))}
                 </select>
