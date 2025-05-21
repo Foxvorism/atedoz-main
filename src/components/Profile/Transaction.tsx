@@ -1,27 +1,29 @@
 "use client";
 import Link from "next/link";
+import { useEffect } from "react";
+import axios from "axios";
 // import React, { useState } from "react";
 // import { Modal } from "../modal"; // Mengimpor Modal
 // import { useModal } from "@/hooks/useModal"; // Menggunakan hook untuk mengelola modal
 
 interface Transactions {
   id: number;
+  order_date: string;
+  start_time: string;
+  end_time: string;
   user: {
     id: number;
     name: string;
   };
   package: {
     id: number;
-    name: string;
+    nama_paket: string;
   };
-  schedule: {
+  photo_studio: {
     id: number;
     date: string;
     time: string;
-    studio: {
-      id: number;
-      name: string;
-    };
+    nama_studio: string;
   };
   status: string;
 }
@@ -31,6 +33,50 @@ interface TransactionProps {
 }
 
 const Transaction: React.FC<TransactionProps> = ({ transactions }) => {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
+    script.setAttribute("data-client-key", process.env.NEXT_PUBLIC_MIDTRANS_CLIENT_KEY!);
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const handlePay = async (orderId: number) => {
+    try {
+      const response = await axios.get(`/api/payment/token/${orderId}`);
+      console.log(response);
+      const token = response.snap_token;
+
+      if (window.snap) {
+        window.snap.pay(token, {
+          onSuccess: function (result: any) {
+            alert("Pembayaran berhasil!");
+            console.log(result);
+          },
+          onPending: function (result: any) {
+            alert("Menunggu pembayaran...");
+            console.log(result);
+          },
+          onError: function (result: any) {
+            alert("Pembayaran gagal!");
+            console.log(result);
+          },
+          onClose: function () {
+            alert("Kamu menutup popup tanpa menyelesaikan pembayaran.");
+          },
+        });
+      } else {
+        alert("Midtrans belum siap.");
+      }
+    } catch (error) {
+      alert("Gagal mengambil token pembayaran.");
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className="flex justify-center items-center p-10 px-30 mb-5 bg-white">
@@ -55,18 +101,21 @@ const Transaction: React.FC<TransactionProps> = ({ transactions }) => {
               >
                 <div className="flex">
                   <div className="font-bold mr-1.5">
-                    {transaction.package.name}
+                    {transaction.package.nama_paket}
                   </div>
                   <div className="mr-1.5">di</div>
                   <div className="font-bold mr-2">
-                    {transaction.schedule.studio.name}
+                    {transaction.photo_studio.nama_studio}
                   </div>
                   <div className="mr-2">-</div>
                   <div>
-                    {transaction.schedule.date} | {transaction.schedule.time}
+                    {transaction.order_date} | {transaction.start_time.slice(0,5)} - {transaction.end_time.slice(0,5)}
                   </div>
                 </div>
                 <div>
+                  <button className="w-20 mx-4 h-7 text-center text-white bg-red-500 rounded-sm font-semibold hover:bg-red-600 cursor-pointer" onClick={() => handlePay(transaction.id)}>
+                    Bayar
+                  </button>
                   <button className="w-7 h-7 text-center text-white bg-red-500 rounded-sm font-semibold hover:bg-red-600 cursor-pointer">
                     X
                   </button>
