@@ -1,10 +1,14 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation"; // Import usePathname untuk mendeteksi path aktif
 import Image from "next/image";
 
 const Navbar: React.FC = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const pathname = usePathname();
+
   const navigation = [
     { id: 1, name: "Beranda", href: "/" },
     { id: 2, name: "Layanan Kami", href: "/services" },
@@ -12,17 +16,30 @@ const Navbar: React.FC = () => {
     { id: 4, name: "Events", href: "/events" },
     { id: 5, name: "Galeri", href: "/gallery" },
     { id: 6, name: "Kontak Kami", href: "/contact" },
-    { id: 7, name: "Profile", href: "/profile" },
+    ...(isLoggedIn ? [{ id: 7, name: "Profile", href: "/profile" }] : []),
   ];
-
-  const [menuOpen, setMenuOpen] = useState(false);
-  const pathname = usePathname(); // Menggunakan hook untuk mendapatkan path aktif
 
   const onToggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const handleLogout = () => {
+    const confirmLogout = window.confirm("Apakah kamu yakin ingin logout?");
+    if (confirmLogout) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setIsLoggedIn(false);
+      window.location.href = "/";
+    }
+  };
+
   const isActive = (href: string) => pathname === href; // Fungsi untuk mengecek apakah href sama dengan path aktif
+
+  useEffect(() => {
+    // Cek apakah token ada di localStorage
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
 
   return (
     <div>
@@ -70,11 +87,21 @@ const Navbar: React.FC = () => {
             </ul>
           </div>
           <div className="flex items-center gap-6">
-            <Link href="/login">
-              <button className="bg-white border-2 font-bold px-8 py-2 rounded-md cursor-pointer hover:bg-black hover:text-white">
-                Sign Up
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="bg-black text-white border-2 font-bold px-8 py-2 rounded-md cursor-pointer hover:bg-[var(--color-black-1)]"
+              >
+                Logout
               </button>
-            </Link>
+            ) : (
+              <Link href="/login">
+                <button className="bg-white border-2 font-bold px-8 py-2 rounded-md cursor-pointer hover:bg-black hover:text-white">
+                  Sign Up
+                </button>
+              </Link>
+            )}
+
             <button
               className="bg-white border-2 font-bold px-8 py-2 rounded-md hover:bg-black hover:text-white cursor-pointer md:hidden"
               onClick={onToggleMenu}
