@@ -3,7 +3,7 @@ import Profile from "@/components/Profile/Profile";
 import Transaction from "@/components/Profile/Transaction";
 import Footer from "@/components/Footer";
 
-export default async function TrancationPage() {
+export default async function UserPage() {
   const transactions = [
     {
       id: 1,
