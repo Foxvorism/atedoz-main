@@ -19,9 +19,9 @@ const Photobooth: React.FC = () => {
               </h2>
 
               <div className="flex gap-5 mt-20">
-                <button className="px-10 py-2 bg-[var(--color-black-2)] text-white rounded-sm">
+                {/* <button className="px-10 py-2 bg-[var(--color-black-2)] text-white rounded-sm">
                   Reservasi
-                </button>
+                </button> */}
                 <button className="px-10 py-2 bg-[var(--color-black-2)] text-white rounded-sm">
                   Pelajari Lebih Lanjut
                 </button>

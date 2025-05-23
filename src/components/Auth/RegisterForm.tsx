@@ -46,7 +46,7 @@ export default function RegisterFormClient() {
     );
 
     if (result.success) {
-      router.push("/login");
+      router.push("/");
     } else {
       setError(result.message || "Registrasi gagal. Silakan coba lagi.");
     }

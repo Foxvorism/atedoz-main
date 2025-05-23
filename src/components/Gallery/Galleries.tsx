@@ -4,30 +4,30 @@ import { Modal } from "../modal"; // Mengimpor Modal
 import { useModal } from "@/hooks/useModal"; // Menggunakan hook untuk mengelola modal
 import Image from "next/image";
 
-interface Photo {
+interface Gallery {
   id: number;
-  url: string;
-  alt: string;
+  foto: string;
+  deskripsi: string;
 }
 
 interface GalleryProps {
-  photos: Photo[];
+  galleries: Gallery[];
 }
 
-const Gallery: React.FC<GalleryProps> = ({ photos }) => {
+const Gallery: React.FC<GalleryProps> = ({ galleries }) => {
   const {
     isOpen: isModalPhotoOpen,
     openModal: openModalPhoto,
     closeModal: closeModalPhoto,
   } = useModal(); // Mengelola status modal
 
-  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null); // Menyimpan foto yang dipilih
+  const [selectedPhoto, setSelectedPhoto] = useState<Gallery | null>(null); // Menyimpan foto yang dipilih
 
   // Menyortir foto berdasarkan id secara descending
-  const sortedPhotos = [...photos].sort((a, b) => b.id - a.id);
+  const sortedPhotos = [...galleries].sort((a, b) => b.id - a.id);
 
   // Fungsi untuk menangani klik pada gambar
-  const handlePhotoClick = (photo: Photo) => {
+  const handlePhotoClick = (photo: Gallery) => {
     setSelectedPhoto(photo); // Menyimpan foto yang dipilih
     openModalPhoto(); // Membuka modal
   };
@@ -40,7 +40,7 @@ const Gallery: React.FC<GalleryProps> = ({ photos }) => {
           Berikut adalah foto-foto yang diambil di studio Atedoz Space
         </h2>
         <div className="flex justify-center items-center w-full">
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 w-full">
             {sortedPhotos.map((photo) => (
               <div
                 key={photo.id}
@@ -48,12 +48,11 @@ const Gallery: React.FC<GalleryProps> = ({ photos }) => {
                 onClick={() => handlePhotoClick(photo)} // Menangani klik gambar
               >
                 <Image
-                  layout="responsive"
-                  width={500} // Tentukan ukuran gambar
-                  height={500} // Tentukan ukuran gambar
-                  src={photo.url}
-                  alt={photo.alt}
-                  className="aspect-square w-full h-full object-cover cursor-pointer"
+                  width={2000} // Tentukan ukuran gambar
+                  height={2000} // Tentukan ukuran gambar
+                  src={photo.foto}
+                  alt={photo.deskripsi}
+                  className="w-full h-auto object-cover cursor-pointer rounded-lg aspect-square"
                 />
               </div>
             ))}
@@ -66,16 +65,15 @@ const Gallery: React.FC<GalleryProps> = ({ photos }) => {
         <Modal
           isOpen={isModalPhotoOpen}
           onClose={closeModalPhoto}
-          className="lg:max-w-[45vw] max-w-[80vw]"
+          className="lg:max-w-[40vw] max-w-[85vw]"
         >
           <div className="w-full">
             <Image
-              layout="intrinsic"
-              width={100} // Tentukan ukuran gambar
-              height={100} // Tentukan ukuran gambar
-              src={selectedPhoto.url}
-              alt={selectedPhoto.alt}
-              className="rounded-xl object-cover aspect-square"
+              width={1200}
+              height={1200}
+              src={selectedPhoto.foto}
+              alt={selectedPhoto.deskripsi}
+              className="rounded-xl object-cover w-full h-auto aspect-square"
             />
           </div>
         </Modal>
