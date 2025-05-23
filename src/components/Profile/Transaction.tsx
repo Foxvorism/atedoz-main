@@ -1,30 +1,54 @@
 "use client";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-// import React, { useState } from "react";
-// import { Modal } from "../modal"; // Mengimpor Modal
-// import { useModal } from "@/hooks/useModal"; // Menggunakan hook untuk mengelola modal
 
 interface Transaction {
   id: number;
   user_id: number;
   package_id: number;
   photo_studio_id: number;
-  order_date: string; // ex: "2025-04-30"
-  start_time: string; // ex: "10:00:00"
-  end_time: string; // ex: "12:00:00"
-  status: string; // ex: "pending"
+  order_date: string;
+  start_time: string;
+  end_time: string;
+  status: string;
   admin_confirmed: number;
-  package: object;
-  photo_studio: object;
+  package: any;
+  photo_studio: any;
 }
 
-interface TransactionProps {
-  transaction_data: Transaction[];
-}
+const TransactionComp: React.FC = () => {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
 
-const TransactionComp: React.FC<TransactionProps> = ({ transaction_data }) => {
+  const handleDelete = async (orderId: number) => {
+    const confirmDelete = confirm("Yakin ingin menghapus transaksi ini?");
+    if (!confirmDelete) return;
+
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/orders/${orderId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Hapus dari state lokal agar langsung hilang dari UI
+      setTransactions((prev) =>
+        prev.filter((transaction) => transaction.id !== orderId)
+      );
+
+      alert("Transaksi berhasil dihapus.");
+    } catch (error) {
+      console.error("Gagal menghapus transaksi:", error);
+      alert("Terjadi kesalahan saat menghapus transaksi.");
+    }
+  };
+
   useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
@@ -39,11 +63,51 @@ const TransactionComp: React.FC<TransactionProps> = ({ transaction_data }) => {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      try {
+        const userRes = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/user`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const userId = userRes.data.id;
+
+        const trxRes = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/orders/user/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        // ✅ Urutkan berdasarkan tanggal terdekat
+        const sorted = trxRes.data.sort((a: Transaction, b: Transaction) => {
+          const dateA = new Date(a.order_date).getTime();
+          const dateB = new Date(b.order_date).getTime();
+          return dateA - dateB;
+        });
+
+        setTransactions(sorted);
+      } catch (error) {
+        console.error("Gagal mengambil data transaksi:", error);
+      }
+    };
+
+    fetchTransactions();
+  }, []);
+
   const handlePay = async (orderId: number) => {
     try {
       const response = await axios.get(`/api/payment/token/${orderId}`);
-      console.log(response);
-      const token = response.snap_token;
+      const token = response.data.snap_token;
 
       if (window.snap) {
         window.snap.pay(token, {
@@ -72,7 +136,17 @@ const TransactionComp: React.FC<TransactionProps> = ({ transaction_data }) => {
     }
   };
 
-  console.log(transaction_data);
+  function formatTanggalIndo(dateString: string): string {
+    if (!dateString) return "-";
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "-";
+
+    return new Intl.DateTimeFormat("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    }).format(date);
+  }
 
   return (
     <>
@@ -91,7 +165,7 @@ const TransactionComp: React.FC<TransactionProps> = ({ transaction_data }) => {
               </Link>
             </div>
 
-            {transaction_data.map((transaction) => (
+            {transactions.map((transaction) => (
               <div
                 key={transaction.id}
                 className="bg-[var(--color-black-2)] text-white p-5 mb-5 rounded-lg flex justify-between items-center"
@@ -106,7 +180,7 @@ const TransactionComp: React.FC<TransactionProps> = ({ transaction_data }) => {
                   </div>
                   <div className="mr-2">-</div>
                   <div>
-                    {transaction.order_date} |{" "}
+                    {formatTanggalIndo(transaction.order_date)} |{" "}
                     {transaction.start_time.slice(0, 5)} -{" "}
                     {transaction.end_time.slice(0, 5)}
                   </div>
@@ -118,7 +192,10 @@ const TransactionComp: React.FC<TransactionProps> = ({ transaction_data }) => {
                   >
                     Bayar
                   </button>
-                  <button className="w-7 h-7 text-center text-white bg-red-500 rounded-sm font-semibold hover:bg-red-600 cursor-pointer">
+                  <button
+                    onClick={() => handleDelete(transaction.id)}
+                    className="w-7 h-7 text-center text-white bg-red-500 rounded-sm font-semibold hover:bg-red-600 cursor-pointer"
+                  >
                     X
                   </button>
                 </div>
