@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import React from "react";
 import axios from "axios";
 
 interface Transaction {
@@ -19,6 +20,8 @@ interface Transaction {
 
 const TransactionComp: React.FC = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null);
 
   const handleDelete = async (orderId: number) => {
     const confirmDelete = confirm("Yakin ingin menghapus transaksi ini?");
@@ -63,8 +66,7 @@ const TransactionComp: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const fetchTransactions = async () => {
+  const fetchTransactions = async () => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
@@ -101,19 +103,36 @@ const TransactionComp: React.FC = () => {
       }
     };
 
+  useEffect(() => {
     fetchTransactions();
   }, []);
 
   const handlePay = async (orderId: number) => {
     try {
-      const response = await axios.get(`/api/payment/token/${orderId}`);
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/payment/token/${orderId}`);
       const token = response.data.snap_token;
 
       if (window.snap) {
         window.snap.pay(token, {
-          onSuccess: function (result: any) {
+          onSuccess: async function (result: any) {
             alert("Pembayaran berhasil!");
-            console.log(result);
+            // console.log(result);
+            try {
+            await axios.post(
+              `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/orders/confirm/${orderId}`,
+              { status: "paid" },
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              }
+            );
+            // Refresh transaksi tanpa reload seluruh web
+            fetchTransactions();
+          } catch (err) {
+            alert("Gagal update status transaksi.");
+            console.error(err);
+          }
           },
           onPending: function (result: any) {
             alert("Menunggu pembayaran...");
@@ -150,6 +169,49 @@ const TransactionComp: React.FC = () => {
 
   return (
     <>
+      {showModal && selectedTransaction && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+          <div className="bg-white rounded-lg p-8 min-w-[320px] max-w-[90vw]">
+            <h3 className="text-xl font-bold mb-4">Detail Transaksi</h3>
+            <div className="mb-2">
+              <span className="font-semibold">Paket:</span> {selectedTransaction.package?.nama_paket}
+            </div>
+            <div className="mb-2">
+              <span className="font-semibold">Studio:</span> {selectedTransaction.photo_studio?.nama_studio}
+            </div>
+            <div className="mb-2">
+              <span className="font-semibold">Tanggal:</span> {formatTanggalIndo(selectedTransaction.order_date)}
+            </div>
+            <div className="mb-2">
+              <span className="font-semibold">Jam:</span> {selectedTransaction.start_time.slice(0, 5)} - {selectedTransaction.end_time.slice(0, 5)}
+            </div>
+            <div className="mb-2">
+              <span className="font-semibold">Status:</span> {selectedTransaction.status}
+            </div>
+            {/* Tambahkan detail lain jika perlu */}
+            <div className="flex gap-2 mt-6">
+              {selectedTransaction.status !== "paid" && (
+                <button
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  onClick={() => {
+                    handlePay(selectedTransaction.id);
+                    setShowModal(false);
+                  }}
+                >
+                  Bayar
+                </button>
+              )}
+              <button
+                className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+                onClick={() => setShowModal(false)}
+              >
+                Tutup
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex justify-center items-center p-10 px-30 mb-5 bg-white">
         <div className="w-full">
           <h2 className="text-2xl font-bold mb-10 text-center">
@@ -188,16 +250,27 @@ const TransactionComp: React.FC = () => {
                 <div>
                   <button
                     className="w-20 mx-4 h-7 text-center text-black bg-white rounded-sm font-semibold hover:bg-[var(--color-black-1)] hover:text-white cursor-pointer"
+                    onClick={() => {
+                      setSelectedTransaction(transaction);
+                      setShowModal(true);
+                    }}
+                  >
+                    Detail
+                  </button>
+                  {/* <button
+                    className="w-20 mx-4 h-7 text-center text-black bg-white rounded-sm font-semibold hover:bg-[var(--color-black-1)] hover:text-white cursor-pointer"
                     onClick={() => handlePay(transaction.id)}
                   >
                     Bayar
-                  </button>
-                  <button
-                    onClick={() => handleDelete(transaction.id)}
-                    className="w-7 h-7 text-center text-white bg-red-500 rounded-sm font-semibold hover:bg-red-600 cursor-pointer"
-                  >
-                    X
-                  </button>
+                  </button> */}
+                  {transaction.status !== "paid" && (
+                    <button
+                      onClick={() => handleDelete(transaction.id)}
+                      className="w-7 h-7 text-center text-white bg-red-500 rounded-sm font-semibold hover:bg-red-600 cursor-pointer"
+                    >
+                      X
+                    </button>
+                  )}
                 </div>
               </div>
             ))}

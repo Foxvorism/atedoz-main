@@ -55,7 +55,7 @@ const Profile: React.FC = () => {
                 <input
                   readOnly
                   type="text"
-                  value={user?.name}
+                  value={user?.name ?? ''}
                   placeholder="Nama Lengkap Anda"
                   className="w-full px-3 py-2 text-[14px] rounded-md bg-transparent border text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10"
                 />
@@ -67,7 +67,7 @@ const Profile: React.FC = () => {
                 <input
                   readOnly
                   type="text"
-                  value={user?.phone}
+                  value={user?.phone ?? ''}
                   placeholder="Nomor telepon anda"
                   className="w-full px-3 py-2 text-[14px] rounded-md bg-transparent border text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10"
                 />
@@ -79,7 +79,7 @@ const Profile: React.FC = () => {
                 <input
                   readOnly
                   type="email"
-                  value={user?.email}
+                  value={user?.email ?? ''}
                   placeholder="Alamat email anda"
                   className="w-full px-3 py-2 text-[14px] rounded-md bg-transparent border text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10"
                 />
@@ -91,7 +91,7 @@ const Profile: React.FC = () => {
                 <input
                   readOnly
                   type="text"
-                  value={user?.role}
+                  value={user?.role ?? ''}
                   placeholder="Role anda di Atedoz"
                   className="w-full px-3 py-2 text-[14px] rounded-md bg-transparent border text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10"
                 />
