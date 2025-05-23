@@ -26,7 +26,7 @@ const Event: React.FC<EventProps> = ({ events }) => {
       <div className="flex justify-center items-center">
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
           {sortedEvents.map((event) => (
-            <Link href={`/events/detail/${event.id}`}>
+            <Link href={`/events/detail-event/${event.id}`}>
               <div
                 key={event.id}
                 className="relative w-full h-full bg-gray-100 rounded-lg overflow-hidden hover:scale-[102%]"
