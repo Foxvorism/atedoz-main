@@ -153,7 +153,7 @@ const TransactionComp: React.FC = () => {
       <div className="flex justify-center items-center p-10 px-30 mb-5 bg-white">
         <div className="w-full">
           <h2 className="text-2xl font-bold mb-10 text-center">
-            Your Transaction
+            Reservasi Kamu
           </h2>
 
           <div className="border rounded-lg border-white shadow-xl/20 p-10 text-[14px]">

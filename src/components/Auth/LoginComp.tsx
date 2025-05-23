@@ -11,10 +11,11 @@ const LoginComp: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
-  const [error, setError] = useState('');
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {}
+  );
+  const [error, setError] = useState("");
   const router = useRouter();
-
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +28,7 @@ const LoginComp: React.FC = () => {
     if (result.success) {
       router.push("/"); // arahkan ke halaman dashboard
     } else {
-      if (typeof result.message === "object" && (result.message)) {
+      if (typeof result.message === "object" && result.message) {
         setErrors(result.message);
       } else {
         setError(result.message || "Login gagal");
@@ -79,8 +80,9 @@ const LoginComp: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Masukan email anda"
-                  className={`w-full px-3 py-2 text-[14px] rounded-md bg-transparent border ${errors.email ? 'border-red-500' : 'border-gray-300'
-                    } text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10`}
+                  className={`w-full px-3 py-2 text-[14px] rounded-md bg-transparent border ${
+                    errors.email ? "border-red-500" : "border-gray-300"
+                  } text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10`}
                 />
                 {errors.email && (
                   <p className="mt-1 text-sm text-red-500">{errors.email}</p>
@@ -96,8 +98,9 @@ const LoginComp: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Masukan password anda"
-                  className={`w-full px-3 py-2 text-[14px] rounded-md bg-transparent border ${errors.password ? 'border-red-500' : 'border-gray-300'
-                    } text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10`}
+                  className={`w-full px-3 py-2 text-[14px] rounded-md bg-transparent border ${
+                    errors.password ? "border-red-500" : "border-gray-300"
+                  } text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10`}
                 />
                 {errors.password && (
                   <p className="mt-1 text-sm text-red-500">{errors.password}</p>
@@ -112,11 +115,10 @@ const LoginComp: React.FC = () => {
                   disabled={isLoading}
                   className="w-full text-center bg-[var(--color-black-2)] text-white py-2 rounded-md font-semibold cursor-pointer hover:bg-[var(--color-brand-500)] disabled:opacity-50"
                 >
-                  {isLoading ? 'Loading...' : 'Login'}
+                  {isLoading ? "Loading..." : "Login"}
                 </button>
               </div>
             </form>
-
 
             <hr className="my-5 opacity-20" />
 
@@ -126,13 +128,13 @@ const LoginComp: React.FC = () => {
                   Belum punya akun? Register
                 </button>
               </Link>
-              <h2 className="mb-3 text-base font-semibold text-center text-bold">
+              {/* <h2 className="mb-3 text-base font-semibold text-center text-bold">
                 atau
               </h2>
 
               <h2 className="text-base font-bold text-center underline cursor-pointer text-bold">
                 Lupa Password?
-              </h2>
+              </h2> */}
             </div>
           </div>
         </div>

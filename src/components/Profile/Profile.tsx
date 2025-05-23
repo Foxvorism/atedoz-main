@@ -44,7 +44,7 @@ const Profile: React.FC = () => {
     <>
       <div className="flex justify-center items-center p-10 px-30 bg-white">
         <div className="w-full">
-          <h2 className="text-2xl font-bold mb-10 text-center">Your Profile</h2>
+          <h2 className="text-2xl font-bold mb-10 text-center">Profil Kamu</h2>
 
           <div className="border rounded-lg border-white shadow-xl/20 p-10">
             <div className="grid grid-cols-2 gap-10 mb-8">
