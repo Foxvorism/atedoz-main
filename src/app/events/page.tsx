@@ -1,4 +1,5 @@
 import Event from "@/components/Events/Event";
+import Article from "@/components/Events/Article";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -8,6 +9,14 @@ interface Events {
   tanggal_event: string;
   deskripsi_event: string;
   thumbnail: string;
+}
+
+interface Articles {
+  id: number;
+  judul: string;
+  content: string;
+  thumbnail: string;
+  created_at: string;
 }
 
 export default async function EventsPage() {
@@ -24,6 +33,7 @@ export default async function EventsPage() {
   }
 
   let events: Events[] = [];
+  let articles: Articles[] = [];
 
   try {
     const res = await fetch(
@@ -42,9 +52,38 @@ export default async function EventsPage() {
       id: event.id,
       nama_event: event.nama_event,
       tanggal_event: formatTanggalIndo(event.tanggal_event),
-      thumbnail: `${process.env.NEXT_PUBLIC_BACKEND_HOST}/photos/${event.thumbnail}`, // jika thumbnail disimpan di storage
+      thumbnail: event.thumbnail
+        ? `${process.env.NEXT_PUBLIC_BACKEND_HOST}/photos/${event.thumbnail}`
+        : "/img/default-image.jpg",
       alt: event.nama_event,
       deskripsi_event: event.deskripsi_event,
+    }));
+  } catch (error) {
+    console.error("Gagal mengambil data:", error);
+  }
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/articles`,
+      {
+        cache: "no-store",
+      }
+    );
+
+    if (!res.ok) throw new Error("Gagal mengambil data article");
+
+    const data: Articles[] = await res.json();
+
+    // ✅ Transform ke format yang dibutuhkan komponen Article.tsx
+    articles = data.map((article) => ({
+      id: article.id,
+      judul: article.judul,
+      content: article.content,
+      thumbnail: article.thumbnail
+        ? `${process.env.NEXT_PUBLIC_BACKEND_HOST}/photos/${article.thumbnail}`
+        : "/img/default-image.jpg",
+      alt: article.judul,
+      created_at: formatTanggalIndo(article.created_at),
     }));
   } catch (error) {
     console.error("Gagal mengambil data:", error);
@@ -55,6 +94,7 @@ export default async function EventsPage() {
       <Navbar />
       <div className="mt-[100px]">
         <Event events={events} />
+        <Article articles={articles} />
         <Footer />
       </div>
     </>
