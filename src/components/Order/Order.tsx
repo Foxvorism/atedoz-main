@@ -10,7 +10,10 @@ const OrderForm: React.FC = () => {
   const [formData, setFormData] = useState({
     user_id: 1,
     package_id: "",
-    photo_studio_id: "",
+    photo_studio_id: {
+      id: 1,
+      nama_studio: "",
+    },
     order_date: "",
     start_time: "",
     end_time: "",
