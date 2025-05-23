@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Photostudio: React.FC = () => {
   return (
@@ -15,9 +16,11 @@ const Photostudio: React.FC = () => {
           </p>
 
           <div className="mb-8">
-            <button className="px-10 py-3 rounded-md bg-[var(--color-black-2)] hover:scale-[102%] cursor-pointer">
-              Reservasi
-            </button>
+            <Link href={"/order"}>
+              <button className="px-10 py-3 rounded-md bg-[var(--color-black-2)] hover:scale-[102%] cursor-pointer">
+                Reservasi
+              </button>
+            </Link>
           </div>
 
           <div className="flex justify-center items-center">
