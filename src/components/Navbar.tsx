@@ -12,7 +12,7 @@ const Navbar: React.FC = () => {
   const navigation = [
     { id: 1, name: "Beranda", href: "/" },
     { id: 2, name: "Layanan Kami", href: "/services" },
-    { id: 3, name: "Partnership", href: "/partnership" },
+    // { id: 3, name: "Partnership", href: "/partnership" },
     { id: 4, name: "Events", href: "/events" },
     { id: 5, name: "Galeri", href: "/gallery" },
     { id: 6, name: "Kontak Kami", href: "/contact" },

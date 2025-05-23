@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Photobooth from "@/components/Services/Photobooth";
 import Photobox from "@/components/Services/Photobox";
 import Photostudio from "@/components/Services/Photostudio";
+import Partnership from "@/components/Services/Partnership";
 import Footer from "@/components/Footer";
 
 export default async function Services() {
@@ -18,6 +19,7 @@ export default async function Services() {
             <Photobooth />
             <Photobox />
             <Photostudio />
+            <Partnership />
           </div>
         </div>
         <Footer />

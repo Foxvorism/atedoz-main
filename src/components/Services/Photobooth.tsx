@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Photobooth: React.FC = () => {
   return (
@@ -22,9 +23,15 @@ const Photobooth: React.FC = () => {
                 {/* <button className="px-10 py-2 bg-[var(--color-black-2)] text-white rounded-sm">
                   Reservasi
                 </button> */}
-                <button className="px-10 py-2 bg-[var(--color-black-2)] text-white rounded-sm">
-                  Pelajari Lebih Lanjut
-                </button>
+                <Link
+                  href={`https://wa.me/6282249938235`}
+                  target="_blank"
+                  rel="noopener noreferrer" // Adding rel attribute for security
+                >
+                  <button className="px-10 py-2 bg-[var(--color-black-2)] text-white rounded-sm cursor-pointer">
+                    Pelajari Lebih Lanjut
+                  </button>
+                </Link>
               </div>
             </div>
             <div className="flex justify-center items-center">

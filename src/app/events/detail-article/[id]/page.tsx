@@ -1,14 +1,8 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import EventDetail from "@/components/Events/EventDetail";
+import ArticleDetail from "@/components/Events/ArticleDetail";
 
-interface Gallery {
-  id: number;
-  foto: string;
-  deskripsi: string;
-}
-
-export default async function EventDetailPage({
+export default async function ArticleDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -19,7 +13,7 @@ export default async function EventDetailPage({
     <>
       <Navbar />
       <div className="mt-[100px]">
-        <EventDetail id={Number(id)} />
+        <ArticleDetail id={Number(id)} />
         <Footer />
       </div>
     </>
