@@ -9,7 +9,7 @@ export default function RegisterFormClient() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone_num: "",
+    phone: "",
     password: "",
     confirmPassword: "",
   });
@@ -29,7 +29,7 @@ export default function RegisterFormClient() {
     setError("");
     setLoading(true);
 
-    const { name, email, phone_num, password, confirmPassword } = formData;
+    const { name, email, phone, password, confirmPassword } = formData;
 
     if (password !== confirmPassword) {
       setError("Konfirmasi password tidak cocok.");
@@ -40,7 +40,7 @@ export default function RegisterFormClient() {
     const result = await register(
       name,
       email,
-      phone_num,
+      phone,
       password,
       confirmPassword
     );
@@ -74,8 +74,8 @@ export default function RegisterFormClient() {
         </h2>
         <input
           type="text"
-          name="phone_num"
-          value={formData.phone_num}
+          name="phone"
+          value={formData.phone}
           onChange={handleChange}
           placeholder="Masukan nomor telepon anda"
           className="w-full px-3 py-2 text-[14px] rounded-md bg-transparent border text-gray-800 border-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10"
