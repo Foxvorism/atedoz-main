@@ -1,39 +1,45 @@
 import Navbar from "@/components/Navbar";
-import Gallery from "@/components/Gallery/Gallery";
+import Galleries from "@/components/Gallery/Galleries";
 import Footer from "@/components/Footer";
 
-interface Photo {
+interface Gallery {
   id: number;
-  url: string;
-  alt: string;
+  foto: string;
+  deskripsi: string;
 }
 
 export default async function GalleryPage() {
-  let photos: Photo[] = [];
+  let galleries: Gallery[] = [];
 
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/galleries`,
       {
-        cache: "no-store", // penting untuk fetch fresh data setiap kali SSR
+        cache: "no-store",
       }
     );
 
-    if (!res.ok) {
-      throw new Error("Gagal mengambil data gallery");
-    }
+    if (!res.ok) throw new Error("Gagal mengambil data article");
 
-    const data = await res.json();
-    photos = data; // Pastikan API mengembalikan array foto
+    const data: Gallery[] = await res.json();
+
+    // ✅ Transform ke format yang dibutuhkan komponen Article.tsx
+    galleries = data.map((gallery) => ({
+      id: gallery.id,
+      foto: gallery.foto
+        ? `${process.env.NEXT_PUBLIC_BACKEND_HOST}/photos/${gallery.foto}`
+        : "/img/default-image.jpg",
+      deskripsi: gallery.deskripsi,
+    }));
   } catch (error) {
-    console.error("Error mengambil data gallery:", error);
+    console.error("Gagal mengambil data:", error);
   }
 
   return (
     <>
       <Navbar />
       <div className="mt-[100px]">
-        <Gallery photos={photos} />
+        <Galleries galleries={galleries} />
         <Footer />
       </div>
     </>
