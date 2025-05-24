@@ -37,7 +37,7 @@ const Package: React.FC = () => {
                     layout="responsive"
                     width={400} // Tentukan ukuran gambar
                     height={0} // Tentukan ukuran gambar
-                    src={packages.thumbnail}
+                    src={`${process.env.NEXT_PUBLIC_BACKEND_HOST}/photos/${packages.thumbnail}`}
                     alt={packages.nama_paket}
                     className="aspect-[4/3] w-full object-cover"
                   />

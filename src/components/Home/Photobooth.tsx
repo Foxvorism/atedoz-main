@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Photobooth: React.FC = () => {
   const photo = [
@@ -17,12 +18,13 @@ const Photobooth: React.FC = () => {
             We are open for collaboration, partnership & rental.
           </p>
 
+          <Link href="/contact">
           <div className="mb-8">
             <button className="px-10 py-3 rounded-md bg-[var(--color-black-2)] hover:scale-[102%] cursor-pointer">
               Kontak Kami
             </button>
           </div>
-
+          </Link>
           <div className="px-[20vw]">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {photo.map((photo) => (

@@ -54,6 +54,7 @@ const Photostudio: React.FC = () => {
           <div className="px-[20vw] my-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               {packages.map((pkg) => (
+                <Link href="/order">
                 <div
                   key={pkg.id}
                   className="relative w-full rounded-xl overflow-hidden bg-[var(--color-gray-1)]"
@@ -73,6 +74,7 @@ const Photostudio: React.FC = () => {
                     </h2>
                   </div>
                 </div>
+                </Link>
               ))}
             </div>
           </div>
