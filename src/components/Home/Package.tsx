@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -9,7 +9,9 @@ const Package: React.FC = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/packages`);
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/packages`
+        );
         // Ambil hanya 4 teratas
         setPackages(res.data.slice(0, 4));
       } catch (error) {
@@ -19,6 +21,24 @@ const Package: React.FC = () => {
     fetchPackages();
   }, []);
 
+  // Helper function to format the price
+  const formatPrice = (price: number | string) => {
+    // Ensure price is a number
+    const numericPrice = typeof price === "string" ? parseFloat(price) : price;
+
+    if (isNaN(numericPrice)) {
+      return "Rp0"; // Handle cases where price is not a valid number
+    }
+
+    // Format to Rupiah with thousands separator
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR",
+      minimumFractionDigits: 0, // No decimal places for thousands
+      maximumFractionDigits: 0, // No decimal places for thousands
+    }).format(numericPrice);
+  };
+
   return (
     <>
       <div className="flex justify-center items-center p-14">
@@ -27,27 +47,35 @@ const Package: React.FC = () => {
 
           <div className="px-[20vw] mb-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              {packages.map((packages) => (
-                <div
-                  key={packages.id}
-                  className="relative w-full rounded-xl overflow-hidden bg-[var(--color-gray-1)]"
-                  // onClick={() => handlePhotoClick(photo)} // Handle click event for first modal
-                >
-                  <Image
-                    layout="responsive"
-                    width={400} // Tentukan ukuran gambar
-                    height={0} // Tentukan ukuran gambar
-                    src={packages.thumbnail}
-                    alt={packages.nama_paket}
-                    className="aspect-[4/3] w-full object-cover"
-                  />
+              {packages.map(
+                (
+                  pkg // Changed 'packages' to 'pkg' to avoid naming conflict
+                ) => (
+                  <div
+                    key={pkg.id}
+                    className="relative w-full rounded-xl overflow-hidden bg-[var(--color-gray-1)]"
+                  >
+                    <Image
+                      layout="responsive"
+                      width={400}
+                      height={0}
+                      src={pkg.thumbnail}
+                      alt={pkg.nama_paket}
+                      className="aspect-[4/3] w-full object-cover"
+                    />
 
-                  <div className="p-8 text-left truncate">
-                    <h2 className="font-bold text-2xl mb-3">{packages.nama_paket}</h2>
-                    <h2 className="font-semibold text-xl">{packages.harga}</h2>
+                    <div className="p-8 text-left truncate">
+                      <h2 className="font-bold text-2xl mb-3">
+                        {pkg.nama_paket}
+                      </h2>
+                      {/* Use the formatPrice helper here */}
+                      <h2 className="font-semibold text-xl">
+                        {formatPrice(pkg.harga)}
+                      </h2>
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              )}
             </div>
           </div>
 
