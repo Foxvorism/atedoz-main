@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Contact from "@/components/Contact/Contact";
+import Maps from "@/components/Contact/Map";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
       <Navbar />
       <div className="mt-[100px]">
         <Contact />
+        <Maps />
         <Footer />
       </div>
     </>
