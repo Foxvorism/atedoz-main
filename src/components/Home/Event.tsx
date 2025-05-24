@@ -1,12 +1,21 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
-const Event: React.FC = () => {
-  const event = [
-    { id: 1, img: "/img/home/event1.png", alt: "event 1" },
-    { id: 2, img: "/img/home/event2.png", alt: "event 2" },
-    { id: 3, img: "/img/home/event3.png", alt: "event 3" },
-  ];
+interface EventItem {
+  id: number;
+  nama_event: string;
+  tanggal_event: string;
+  deskripsi_event: string;
+  thumbnail: string;
+}
+
+interface EventProps {
+  events: EventItem[];
+}
+
+const Event: React.FC<EventProps> = ({ events }) => {
+  const sortedEvents = [...events].sort((a, b) => b.id - a.id);
 
   return (
     <>
@@ -17,18 +26,38 @@ const Event: React.FC = () => {
           </h2>
 
           {/* Horizontal Scrollable Image Section */}
-          <div className="w-[60vw] flex overflow-x-auto space-x-5 py-4">
-            {event.map((event) => (
-              <div className="flex-shrink-0" key={event.id}>
-                <Image
-                  layout="intrinsic" // Menggunakan layout intrinsic agar width menyesuaikan dengan height
-                  width={600} // Tentukan lebar gambar sebagai referensi rasio
-                  height={325} // Tentukan tinggi gambar, width akan menyesuaikan
-                  src={event.img}
-                  alt={event.alt}
-                  className="w-full h-auto object-cover rounded-lg" // Lebar 100% dan tinggi otomatis
-                />
-              </div>
+          {/* Tambahkan `flex-nowrap` untuk mencegah wrapping dan memaksa scroll horizontal */}
+          <div className="w-[60vw] flex flex-nowrap overflow-x-auto space-x-5 py-4">
+            {sortedEvents.map((event) => (
+              <Link href={`/events/detail-event/${event.id}`} key={event.id}>
+                {/* Beri lebar dan tinggi tetap pada container setiap event item */}
+                {/* Tambahkan `flex-shrink-0` agar item tidak menyusut dan mempertahankan lebar tetap */}
+                <div className="w-[300px] h-[350px] flex-shrink-0 bg-gray-100 rounded-lg hover:scale-[102%] cursor-pointer">
+                  <div className="relative w-full h-[200px]">
+                    {" "}
+                    {/* Wrapper untuk gambar dengan tinggi tetap */}
+                    <Image
+                      width={100}
+                      height={100}
+                      src={event.thumbnail}
+                      alt={event.nama_event}
+                      className="object-cover rounded-t-lg w-full" // Pastikan `object-cover` dan `rounded-t-lg` untuk konsistensi
+                    />
+                  </div>
+                  <div className="p-4 text-center">
+                    {" "}
+                    {/* Tambahkan text-left untuk konsistensi */}
+                    <h2 className="text-xl font-bold mb-3">
+                      {" "}
+                      {/* Tambahkan truncate jika nama_event terlalu panjang */}
+                      {event.nama_event}
+                    </h2>
+                    <h3 className="text-gray-400 text-xs">
+                      {event.tanggal_event}
+                    </h3>
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
