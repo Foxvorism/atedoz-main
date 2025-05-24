@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 
 const Package: React.FC = () => {
   const [packages, setPackages] = useState<any[]>([]);
@@ -51,6 +52,7 @@ const Package: React.FC = () => {
                 (
                   pkg // Changed 'packages' to 'pkg' to avoid naming conflict
                 ) => (
+                  <Link href="/order">
                   <div
                     key={pkg.id}
                     className="relative w-full rounded-xl overflow-hidden bg-[var(--color-gray-1)]"
@@ -59,7 +61,7 @@ const Package: React.FC = () => {
                       layout="responsive"
                       width={400}
                       height={0}
-                      src={pkg.thumbnail}
+                      src={`${process.env.NEXT_PUBLIC_BACKEND_HOST}/photos/${pkg.thumbnail}`}
                       alt={pkg.nama_paket}
                       className="aspect-[4/3] w-full object-cover"
                     />
@@ -74,6 +76,7 @@ const Package: React.FC = () => {
                       </h2>
                     </div>
                   </div>
+                  </Link>
                 )
               )}
             </div>
