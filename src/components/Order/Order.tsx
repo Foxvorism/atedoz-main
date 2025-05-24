@@ -5,11 +5,15 @@ import axios from "axios";
 const OrderForm: React.FC = () => {
   const [packages, setPackages] = useState([]);
   const [studios, setStudios] = useState([]);
+  const [userId, setUserId] = useState<number | null>(null);
 
   const [formData, setFormData] = useState({
     user_id: 1,
     package_id: "",
-    photo_studio_id: "",
+    photo_studio_id: {
+      id: 1,
+      nama_studio: "",
+    },
     order_date: "",
     start_time: "",
     end_time: "",
@@ -55,6 +59,21 @@ const OrderForm: React.FC = () => {
   ];
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+  if (token) {
+    axios.get(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/user`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => {
+      setUserId(res.data.id);
+      setFormData((prev) => ({
+        ...prev,
+        user_id: res.data.id,
+      }));
+    });
+  }
+
     axios.get("http://127.0.0.1:8000/api/packages").then((res) => {
       setPackages(res.data);
     });
@@ -74,7 +93,8 @@ const OrderForm: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/orders", formData);
+      const dataToSend = { ...formData, user_id: userId };
+      const res = await axios.post("http://127.0.0.1:8000/api/orders", dataToSend);
       alert("Order berhasil dibuat!");
       console.log(res.data);
     } catch (error) {

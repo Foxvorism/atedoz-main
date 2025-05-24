@@ -26,9 +26,8 @@ const Article: React.FC<ArticleProps> = ({ articles }) => {
       <div className="flex justify-center items-center">
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
           {sortedArticles.map((article) => (
-            <Link href={`/events/detail-article/${article.id}`}>
+            <Link href={`/events/detail-article/${article.id}`} key={article.id}>
               <div
-                key={article.id}
                 className="relative w-full bg-gray-100 rounded-lg overflow-hidden hover:scale-[102%]"
               >
                 <Image

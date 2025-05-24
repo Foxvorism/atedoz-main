@@ -94,14 +94,9 @@ const Footer: React.FC = () => {
                 layanan Kami
               </h2>
             </Link>
-            <Link href="/partnership">
-              <h2 className="text-lg font-bold mb-3 hover:text-gray-500 cursor-pointer">
-                Partnership
-              </h2>
-            </Link>
             <Link href="/event">
               <h2 className="text-lg font-bold mb-3 hover:text-gray-500 cursor-pointer">
-                Event
+                Events
               </h2>
             </Link>
             <Link href="/gallery">

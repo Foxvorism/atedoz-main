@@ -1,36 +1,23 @@
+'use client'
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Package: React.FC = () => {
-  const packages = [
-    {
-      id: 1,
-      name: "package 1",
-      price: "200k/hour",
-      img: "/img/home/package1.png",
-      alt: "homepackage1",
-    },
-    {
-      id: 2,
-      name: "package 2",
-      price: "200k/hour",
-      img: "/img/home/package2.png",
-      alt: "homepackage2",
-    },
-    {
-      id: 3,
-      name: "package 3",
-      price: "200k/hour",
-      img: "/img/home/package3.png",
-      alt: "homepackage3",
-    },
-    {
-      id: 4,
-      name: "package 4",
-      price: "200k/hour",
-      img: "/img/home/package4.png",
-      alt: "homepackage4",
-    },
-  ];
+  const [packages, setPackages] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/packages`);
+        // Ambil hanya 4 teratas
+        setPackages(res.data.slice(0, 4));
+      } catch (error) {
+        console.error("Gagal mengambil data packages:", error);
+      }
+    };
+    fetchPackages();
+  }, []);
 
   return (
     <>
@@ -50,14 +37,14 @@ const Package: React.FC = () => {
                     layout="responsive"
                     width={400} // Tentukan ukuran gambar
                     height={0} // Tentukan ukuran gambar
-                    src={packages.img}
-                    alt={packages.alt}
+                    src={packages.thumbnail}
+                    alt={packages.nama_paket}
                     className="aspect-[4/3] w-full object-cover"
                   />
 
                   <div className="p-8 text-left truncate">
-                    <h2 className="font-bold text-2xl mb-3">{packages.name}</h2>
-                    <h2 className="font-semibold text-xl">{packages.price}</h2>
+                    <h2 className="font-bold text-2xl mb-3">{packages.nama_paket}</h2>
+                    <h2 className="font-semibold text-xl">{packages.harga}</h2>
                   </div>
                 </div>
               ))}
