@@ -15,11 +15,11 @@ const Partnership: React.FC = () => {
                   melakukan kerja sama dengan event, rental dan berkolaborasi.
                 </p>
 
-                <div className="mb-8">
+                {/* <div className="mb-8">
                   <button className="px-10 py-3 rounded-md text-white bg-[var(--color-black-2)] hover:scale-[102%] cursor-pointer">
                     Pelajari Lebih Lanjut
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="">
