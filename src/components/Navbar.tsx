@@ -15,8 +15,9 @@ const Navbar: React.FC = () => {
     // { id: 3, name: "Partnership", href: "/partnership" },
     { id: 4, name: "Events", href: "/events" },
     { id: 5, name: "Galeri", href: "/gallery" },
-    { id: 6, name: "Kontak Kami", href: "/contact" },
-    ...(isLoggedIn ? [{ id: 7, name: "Profile", href: "/profile" }] : []),
+    { id: 6, name: "Lokasi", href: "/location" },
+    { id: 7, name: "Kontak Kami", href: "/contact" },
+    ...(isLoggedIn ? [{ id: 8, name: "Profile", href: "/profile" }] : []),
   ];
 
   const onToggleMenu = () => {
