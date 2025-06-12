@@ -91,7 +91,8 @@ const Footer: React.FC = () => {
             </Link>
             <Link href="/service">
               <h2 className="text-lg font-bold mb-3 hover:text-gray-500 cursor-pointer">
-                Layanan Kami
+                L
+                ayanan Kami
               </h2>
             </Link>
             <Link href="/event">
