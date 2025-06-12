@@ -24,7 +24,7 @@ const Photobooth: React.FC = () => {
                   Reservasi
                 </button> */}
                 <Link
-                  href={`https://wa.me/6282249938235`}
+                  href="/contact"
                   target="_blank"
                   rel="noopener noreferrer" // Adding rel attribute for security
                 >

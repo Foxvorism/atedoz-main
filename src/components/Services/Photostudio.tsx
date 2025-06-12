@@ -10,7 +10,9 @@ const Photostudio: React.FC = () => {
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/packages`);
+        const res = await axios.get(
+          `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/packages`
+        );
         setPackages(res.data); // tampilkan semua package
       } catch (error) {
         console.error("Gagal mengambil data packages:", error);
@@ -39,7 +41,7 @@ const Photostudio: React.FC = () => {
             </Link>
           </div>
 
-          <div className="flex justify-center items-center">
+          {/* <div className="flex justify-center items-center">
             <Image
               layout="intrinsic"
               width={443}
@@ -48,32 +50,34 @@ const Photostudio: React.FC = () => {
               alt="Photo Studio"
               className="aspect-video w-[60rem] object-fit rounded-lg"
             />
-          </div>
+          </div> */}
 
           {/* Tampilkan semua package */}
-          <div className="px-[20vw] my-10">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <div className="px-[10vw] my-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
               {packages.map((pkg) => (
-                <Link href="/order">
-                <div
-                  key={pkg.id}
-                  className="relative w-full rounded-xl overflow-hidden bg-[var(--color-gray-1)]"
-                >
-                  <Image
-                    layout="responsive"
-                    width={400}
-                    height={300}
-                    src={`${process.env.NEXT_PUBLIC_BACKEND_HOST}/photos/${pkg.thumbnail}`}
-                    alt={pkg.nama_paket}
-                    className="aspect-[4/3] w-full object-cover"
-                  />
-                  <div className="p-8 text-left truncate">
-                    <h2 className="font-bold text-2xl mb-3 text-gray-900">{pkg.nama_paket}</h2>
-                    <h2 className="font-semibold text-xl text-gray-800">
-                      {"Rp. " + Number(pkg.harga).toLocaleString("id-ID")}
-                    </h2>
+                <Link href="/contact">
+                  <div
+                    key={pkg.id}
+                    className="relative w-full rounded-xl overflow-hidden bg-[var(--color-gray-1)]"
+                  >
+                    <Image
+                      layout="responsive"
+                      width={400}
+                      height={300}
+                      src={`${process.env.NEXT_PUBLIC_BACKEND_HOST}/photos/${pkg.thumbnail}`}
+                      alt={pkg.nama_paket}
+                      className="aspect-[4/3] w-full object-cover"
+                    />
+                    <div className="p-8 text-left truncate">
+                      <h2 className="font-bold text-2xl mb-3 text-gray-900">
+                        {pkg.nama_paket}
+                      </h2>
+                      <h2 className="font-semibold text-xl text-gray-800">
+                        {"Rp. " + Number(pkg.harga).toLocaleString("id-ID")}
+                      </h2>
+                    </div>
                   </div>
-                </div>
                 </Link>
               ))}
             </div>

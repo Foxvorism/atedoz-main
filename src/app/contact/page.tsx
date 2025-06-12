@@ -9,7 +9,7 @@ export default function Home() {
       <Navbar />
       <div className="mt-[100px]">
         <Contact />
-        <Maps />
+        {/* <Maps /> */}
         <Footer />
       </div>
     </>

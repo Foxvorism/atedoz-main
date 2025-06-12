@@ -10,18 +10,7 @@ export default async function Location() {
     <>
       <Navbar />
       <div className="mt-[100px]">
-        <div className="flex justify-center items-center bg-white">
-          <div className="w-full">
-            <h2 className="text-2xl font-bold mb-10 text-center pt-10 px-30">
-              Lokasi
-            </h2>
-
-            {/* <Photobooth /> */}
-            {/* <Photobox /> */}
-            {/* <Photostudio /> */}
-            <Map />
-          </div>
-        </div>
+        <Map />
         <Footer />
       </div>
     </>
