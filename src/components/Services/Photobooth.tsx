@@ -37,8 +37,8 @@ const Photobooth: React.FC = () => {
             <div className="flex justify-center items-center">
               <Image
                 layout="intrinsic"
-                width={100} // Tentukan ukuran gambar
-                height={100} // Tentukan ukuran gambar
+                width={600} // Tentukan ukuran gambar
+                height={600} // Tentukan ukuran gambar
                 src="/img/services/photobooth.png"
                 alt="Photobooth"
                 className="aspect-square w-[80%] object-cover rounded-md"

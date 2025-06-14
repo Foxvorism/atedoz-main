@@ -32,7 +32,7 @@ const Photostudio: React.FC = () => {
           </p>
 
           <div className="mb-8">
-            <Link href={"/order"}>
+            <Link href={`https://wa.me/6285219805200`}>
               <button className="px-10 py-3 rounded-md bg-[var(--color-black-2)] hover:scale-[102%] cursor-pointer">
                 Reservasi
               </button>
@@ -54,9 +54,8 @@ const Photostudio: React.FC = () => {
           <div className="px-[20vw] my-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               {packages.map((pkg) => (
-                <Link href="/order">
+                <Link href={`https://wa.me/6285219805200`} key={pkg.id}>
                 <div
-                  key={pkg.id}
                   className="relative w-full rounded-xl overflow-hidden bg-[var(--color-gray-1)]"
                 >
                   <Image

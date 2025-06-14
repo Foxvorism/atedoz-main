@@ -13,19 +13,26 @@ const Contact: React.FC = () => {
     {
       id: 2,
       logo: "/icon/wa.svg",
-      name: "Whatsapp",
+      name: "WA Photobooth",
       contact: "+62 822-4993-8235",
       link: "https://wa.me/6282249938235",
     },
     {
       id: 3,
+      logo: "/icon/wa.svg",
+      name: "WA Photo Studio",
+      contact: "+62 822-4993-8235",
+      link: "https://wa.me/6285219805200",
+    },
+    {
+      id: 4,
       logo: "/icon/ig.svg",
       name: "Instagram",
       contact: "@atedoz.space",
       link: "https://www.instagram.com/atedoz.space/",
     },
     {
-      id: 4, // Fixed duplicate id
+      id: 5, // Fixed duplicate id
       logo: "/icon/tiktok.svg",
       name: "Tiktok",
       contact: "@atedozphotobooth",
@@ -41,7 +48,7 @@ const Contact: React.FC = () => {
           Tekan pilihan kontak dibawah untuk langsung menghubungi
         </h2>
         <div className="flex justify-center items-center">
-          <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="w-full grid grid-cols-2 lg:grid-cols-5 gap-10">
             {contact.map((contact) => (
               <Link
                 href={contact.link}

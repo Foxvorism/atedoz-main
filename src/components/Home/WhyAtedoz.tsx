@@ -38,13 +38,12 @@ const WhyAtedoz: React.FC = () => {
     <>
       <div className="flex justify-center items-center p-14">
         <div className="text-center">
-          <h2 className="font-bold text-3xl mb-10">Atedoz Space</h2>
+          <h2 className="font-bold text-3xl mb-10">Mengapa Atedoz Space?</h2>
           <p className="font-medium text-lg w-[60vw]">
             Atedoz space memiliki banyak layanan.
           </p>
           <p className="font-medium text-lg w-[60vw] mb-10">
-            Layanan yang kami unggulkan adalah Photobooth yang sekarang sudah
-            banyak variasi yang bisa digunakan.
+            Karena kami tahu setiap momen butuh sentuhan visual yang berkesan. Atedoz Space siap bantu wujudkan foto dan video berkualitas tinggi dengan suasana nyaman dan hasil profesional
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-5 gap-10">

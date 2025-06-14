@@ -15,9 +15,9 @@ const Navbar: React.FC = () => {
     // { id: 3, name: "Partnership", href: "/partnership" },
     { id: 4, name: "Events", href: "/events" },
     { id: 5, name: "Galeri", href: "/gallery" },
-    { id: 6, name: "Lokasi", href: "/location" },
+    // { id: 6, name: "Lokasi", href: "/location" },
     { id: 7, name: "Kontak Kami", href: "/contact" },
-    ...(isLoggedIn ? [{ id: 8, name: "Profile", href: "/profile" }] : []),
+    // ...(isLoggedIn ? [{ id: 8, name: "Profile", href: "/profile" }] : []),
   ];
 
   const onToggleMenu = () => {
@@ -88,7 +88,7 @@ const Navbar: React.FC = () => {
             </ul>
           </div>
           <div className="flex items-center gap-6">
-            {isLoggedIn ? (
+            {/* {isLoggedIn ? (
               <button
                 onClick={handleLogout}
                 className="bg-black text-white border-2 font-bold px-8 py-2 rounded-md cursor-pointer hover:bg-[var(--color-black-1)]"
@@ -101,7 +101,7 @@ const Navbar: React.FC = () => {
                   Sign Up
                 </button>
               </Link>
-            )}
+            )} */}
 
             <button
               className="bg-white border-2 font-bold px-8 py-2 rounded-md hover:bg-black hover:text-white cursor-pointer md:hidden"

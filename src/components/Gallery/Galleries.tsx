@@ -51,7 +51,7 @@ const Gallery: React.FC<GalleryProps> = ({ galleries }) => {
                   width={2000} // Tentukan ukuran gambar
                   height={2000} // Tentukan ukuran gambar
                   src={photo.foto}
-                  alt={photo.deskripsi}
+                  alt={photo.deskripsi ? photo.deskripsi : "Gallery Photo"}
                   className="w-full h-auto object-cover cursor-pointer rounded-lg aspect-square"
                 />
               </div>
@@ -72,7 +72,7 @@ const Gallery: React.FC<GalleryProps> = ({ galleries }) => {
               width={1200}
               height={1200}
               src={selectedPhoto.foto}
-              alt={selectedPhoto.deskripsi}
+              alt={selectedPhoto.deskripsi ? selectedPhoto.deskripsi : "Selected Photo"}
               className="rounded-xl object-cover w-full h-auto aspect-square"
             />
           </div>

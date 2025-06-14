@@ -52,9 +52,8 @@ const Package: React.FC = () => {
                 (
                   pkg // Changed 'packages' to 'pkg' to avoid naming conflict
                 ) => (
-                  <Link href="/order">
+                  <Link href={`https://wa.me/6285219805200`} key={pkg.id}>
                   <div
-                    key={pkg.id}
                     className="relative w-full rounded-xl overflow-hidden bg-[var(--color-gray-1)]"
                   >
                     <Image
@@ -82,11 +81,13 @@ const Package: React.FC = () => {
             </div>
           </div>
 
-          <div className="mb-8">
-            <button className="px-10 py-3 rounded-md text-white bg-[var(--color-black-2)] hover:scale-[102%] cursor-pointer">
-              Kontak Kami
-            </button>
-          </div>
+          <Link href={`/contact`}>
+            <div className="mb-8">
+              <button className="px-10 py-3 rounded-md text-white bg-[var(--color-black-2)] hover:scale-[102%] cursor-pointer">
+                Kontak Kami
+              </button>
+            </div>  
+          </Link>
         </div>
       </div>
     </>

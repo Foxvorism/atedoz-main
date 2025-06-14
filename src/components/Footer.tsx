@@ -78,7 +78,24 @@ const Footer: React.FC = () => {
                   src="/icon/wa.svg"
                   alt="ig"
                 />
-                <h2 className="text-lg font-bold">Whatsapp</h2>
+                <h2 className="text-lg font-bold">Whatsapp Photobooth</h2>
+              </div>
+            </Link>
+            <Link
+              href="https://wa.me/6285219805200"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="flex items-center mb-3 cursor-pointer hover:text-gray-500">
+                <Image
+                  layout="intrinsic"
+                  width={100} // Tentukan ukuran gambar
+                  height={100} // Tentukan ukuran gambar
+                  className="mr-2 w-5"
+                  src="/icon/wa.svg"
+                  alt="ig"
+                />
+                <h2 className="text-lg font-bold">Whatsapp Photo Studio</h2>
               </div>
             </Link>
           </div>
