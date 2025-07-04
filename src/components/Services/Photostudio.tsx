@@ -4,8 +4,16 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 
+type Package = {
+  id: number;
+  nama_paket: string;
+  harga: string;
+  thumbnail: string;
+  // tambahkan properti lain sesuai kebutuhan
+};
+
 const Photostudio: React.FC = () => {
-  const [packages, setPackages] = useState<any[]>([]);
+  const [packages, setPackages] = useState<Package[]>([]);
 
   useEffect(() => {
     const fetchPackages = async () => {
