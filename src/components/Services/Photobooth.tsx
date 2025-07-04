@@ -39,7 +39,7 @@ const Photobooth: React.FC = () => {
                 layout="intrinsic"
                 width={600} // Tentukan ukuran gambar
                 height={600} // Tentukan ukuran gambar
-                src="/img/services/photobooth.png"
+                src="/img/services/photobooth2.jpg"
                 alt="Photobooth"
                 className="aspect-square w-[80%] object-cover rounded-md"
               ></Image>

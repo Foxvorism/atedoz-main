@@ -4,8 +4,10 @@ import Link from "next/link";
 
 const Photobooth: React.FC = () => {
   const photo = [
-    { id: 1, src: "/img/home/photobooth1.png", alt: "Home Photobooth 1" },
-    { id: 2, src: "/img/home/photobooth2.png", alt: "Home Photobooth 2" },
+    { id: 1, src: "/img/home/photobooth3.jpg", alt: "Home Photobooth 1" },
+    { id: 2, src: "/img/home/photobooth4.jpg", alt: "Home Photobooth 2" },
+    { id: 3, src: "/img/home/photobooth5.png", alt: "Home Photobooth 3" },
+    { id: 4, src: "/img/home/photobooth6.png", alt: "Home Photobooth 4" },
   ];
 
   return (
@@ -25,8 +27,8 @@ const Photobooth: React.FC = () => {
             </button>
           </div>
           </Link>
-          <div className="px-[20vw]">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="px-[5vw]">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {photo.map((photo) => (
                 <div
                   key={photo.id}
@@ -35,8 +37,8 @@ const Photobooth: React.FC = () => {
                 >
                   <Image
                     layout="responsive"
-                    width={443} // Tentukan ukuran gambar
-                    height={443} // Tentukan ukuran gambar
+                    width={1080} // Tentukan ukuran gambar
+                    height={1590} // Tentukan ukuran gambar
                     src={photo.src}
                     alt={photo.alt}
                     className="aspect-square w-full h-full object-fit"

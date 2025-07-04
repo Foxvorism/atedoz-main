@@ -44,7 +44,7 @@ const Photostudio: React.FC = () => {
               layout="intrinsic"
               width={443}
               height={443}
-              src="/img/services/photostudio.png"
+              src="/img/services/photostudio2.jpg"
               alt="Photo Studio"
               className="aspect-video w-[60rem] object-fit rounded-lg"
             />

@@ -4,7 +4,7 @@ const Hero: React.FC = () => {
       <div
         className="flex bg-black h-[calc(100vh-100px)] bg-cover"
         style={{
-          backgroundImage: `url(/img/home/hero.png)`,
+          backgroundImage: `url(/img/home/hero2.jpg)`,
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}

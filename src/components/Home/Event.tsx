@@ -32,8 +32,8 @@ const Event: React.FC<EventProps> = ({ events }) => {
               <Link href={`/events/detail-event/${event.id}`} key={event.id}>
                 {/* Beri lebar dan tinggi tetap pada container setiap event item */}
                 {/* Tambahkan `flex-shrink-0` agar item tidak menyusut dan mempertahankan lebar tetap */}
-                <div className="w-[300px] h-[350px] flex-shrink-0 bg-gray-100 rounded-lg hover:scale-[102%] cursor-pointer">
-                  <div className="relative w-full h-[200px]">
+                <div className="w-[300px] h-[700px] flex-shrink-0 bg-gray-100 rounded-lg hover:scale-[102%] cursor-pointer">
+                  <div className="relative w-full h-[550px]">
                     {" "}
                     {/* Wrapper untuk gambar dengan tinggi tetap */}
                     <Image

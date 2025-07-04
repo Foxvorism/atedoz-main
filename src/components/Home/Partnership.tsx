@@ -24,10 +24,9 @@ const Partnership: React.FC = () => {
             </div>
             <div className="">
               <Image
-                layout="responsive"
-                width={600} // Tentukan ukuran gambar
+                width={400} // Tentukan ukuran gambar
                 height={0} // Tentukan ukuran gambar
-                src="/img/home/partnership.png"
+                src="/img/home/partnership2.jpg"
                 alt="partnership"
               />
             </div>
