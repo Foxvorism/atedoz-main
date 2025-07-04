@@ -7,7 +7,6 @@ import React, { useState } from "react";
 // import { EyeIcon, EyeCloseIcon } from "@/icons";
 
 const LoginComp: React.FC = () => {
-  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);

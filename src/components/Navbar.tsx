@@ -6,7 +6,8 @@ import Image from "next/image";
 
 const Navbar: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [,setIsLoggedIn] = useState(false);
   const pathname = usePathname();
 
   const navigation = [
@@ -24,15 +25,15 @@ const Navbar: React.FC = () => {
     setMenuOpen(!menuOpen);
   };
 
-  const handleLogout = () => {
-    const confirmLogout = window.confirm("Apakah kamu yakin ingin logout?");
-    if (confirmLogout) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      setIsLoggedIn(false);
-      window.location.href = "/";
-    }
-  };
+  // const handleLogout = () => {
+  //   const confirmLogout = window.confirm("Apakah kamu yakin ingin logout?");
+  //   if (confirmLogout) {
+  //     localStorage.removeItem("token");
+  //     localStorage.removeItem("user");
+  //     setIsLoggedIn(false);
+  //     window.location.href = "/";
+  //   }
+  // };
 
   const isActive = (href: string) => pathname === href; // Fungsi untuk mengecek apakah href sama dengan path aktif
 

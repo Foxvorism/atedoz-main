@@ -4,8 +4,16 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 
+type Package = {
+  id: number;
+  nama_paket: string;
+  harga: string;
+  thumbnail: string;
+  // tambahkan properti lain sesuai kebutuhan
+};
+
 const Package: React.FC = () => {
-  const [packages, setPackages] = useState<any[]>([]);
+  const [packages, setPackages] = useState<Package[]>([]);
 
   useEffect(() => {
     const fetchPackages = async () => {

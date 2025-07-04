@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 
 const Map: React.FC = () => {
   return (
