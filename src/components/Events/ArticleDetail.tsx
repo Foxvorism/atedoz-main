@@ -106,9 +106,13 @@ export default function ArticleDetail({ id }: { id: number }) {
           />
         </div>
 
-        <div className="text-center mx-16">
-          <p className="text-lg font-medium">{article.content}</p>
-        </div>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: article.content.replace(/\n/g, "<br />")
+          }}
+        ></div>
+
+
       </div>
     </>
   );
