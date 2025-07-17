@@ -47,17 +47,6 @@ const Photostudio: React.FC = () => {
             </Link>
           </div>
 
-          <div className="flex justify-center items-center">
-            <Image
-              layout="intrinsic"
-              width={443}
-              height={443}
-              src="/img/services/photostudio2.jpg"
-              alt="Photo Studio"
-              className="aspect-video w-[60rem] object-fit rounded-lg"
-            />
-          </div>
-
           {/* Tampilkan semua package */}
           <div className="px-[20vw] my-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">

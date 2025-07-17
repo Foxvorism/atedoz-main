@@ -1,5 +1,4 @@
 import Event from "@/components/Events/Event";
-import Article from "@/components/Events/Article";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -62,39 +61,11 @@ export default async function EventsPage() {
     console.error("Gagal mengambil data:", error);
   }
 
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/articles`,
-      {
-        cache: "no-store",
-      }
-    );
-
-    if (!res.ok) throw new Error("Gagal mengambil data article");
-
-    const data: Articles[] = await res.json();
-
-    // ✅ Transform ke format yang dibutuhkan komponen Article.tsx
-    articles = data.map((article) => ({
-      id: article.id,
-      judul: article.judul,
-      content: article.content,
-      thumbnail: article.thumbnail
-        ? `${process.env.NEXT_PUBLIC_BACKEND_HOST}/photos/${article.thumbnail}`
-        : "/img/default-image.jpg",
-      alt: article.judul,
-      created_at: formatTanggalIndo(article.created_at),
-    }));
-  } catch (error) {
-    console.error("Gagal mengambil data:", error);
-  }
-
   return (
     <>
       <Navbar />
       <div className="mt-[100px]">
         <Event events={events} />
-        <Article articles={articles} />
         <Footer />
       </div>
     </>

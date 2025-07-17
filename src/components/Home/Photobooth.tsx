@@ -28,20 +28,18 @@ const Photobooth: React.FC = () => {
           </div>
           </Link>
           <div className="px-[5vw]">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="flex flex-row gap-4 overflow-x-auto">
               {photo.map((photo) => (
                 <div
                   key={photo.id}
-                  className="relative w-full rounded-lg overflow-hidden"
-                  // onClick={() => handlePhotoClick(photo)} // Handle click event for first modal
+                  className="relative rounded-lg overflow-hidden aspect-[4/5] min-w-[216px] max-w-[350px] flex-shrink-0"
+                  style={{ width: "350px", height: "437.5px" }} // 1080/4=270, 1350/4=337.5
                 >
                   <Image
-                    layout="responsive"
-                    width={1080} // Tentukan ukuran gambar
-                    height={1590} // Tentukan ukuran gambar
+                    layout="fill"
+                    objectFit="cover"
                     src={photo.src}
                     alt={photo.alt}
-                    className="aspect-square w-full h-full object-fit"
                   />
                 </div>
               ))}
