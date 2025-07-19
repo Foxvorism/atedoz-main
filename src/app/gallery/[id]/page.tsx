@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GalleryDetail from "@/components/Gallery/GalleryDetail";
+import { NextPage } from "next"; // Import NextPage
 
 interface Photo {
   id: number;
@@ -14,11 +15,17 @@ interface Gallery {
   photos: Photo[];
 }
 
-export default async function GalleryDetailPage({
+// Definisikan tipe props untuk halaman Anda
+interface GalleryDetailPageProps {
+  params: {
+    id: string;
+  };
+}
+
+// Gunakan NextPage dengan tipe props yang Anda definisikan
+const GalleryDetailPage: NextPage<GalleryDetailPageProps> = async ({
   params,
-}: {
-  params: { id: string };
-}) {
+}) => {
   const { id } = params;
   let galleries: Gallery[] = [];
   let photos: Photo[] = [];
@@ -43,15 +50,16 @@ export default async function GalleryDetailPage({
       deskripsi: photo.deskripsi,
     }));
 
-    galleries = [{
-      id: data.id,
-      judul: data.judul,
-      photos: photos,
-    }];
+    galleries = [
+      {
+        id: data.id,
+        judul: data.judul,
+        photos: photos,
+      },
+    ];
   } catch (error) {
     console.error("Gagal mengambil data:", error);
   }
-
 
   return (
     <>
@@ -62,4 +70,6 @@ export default async function GalleryDetailPage({
       </div>
     </>
   );
-}
+};
+
+export default GalleryDetailPage;
