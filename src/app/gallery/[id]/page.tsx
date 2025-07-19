@@ -18,9 +18,9 @@ interface Gallery {
 export default async function GalleryDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const { id } = params;
+  const { id } = await params;
   let galleries: Gallery[] = [];
   let photos: Photo[] = [];
 
