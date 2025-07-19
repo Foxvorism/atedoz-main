@@ -10,14 +10,6 @@ interface Events {
   thumbnail: string;
 }
 
-interface Articles {
-  id: number;
-  judul: string;
-  content: string;
-  thumbnail: string;
-  created_at: string;
-}
-
 export default async function EventsPage() {
   function formatTanggalIndo(dateString: string): string {
     if (!dateString) return "-";
@@ -32,7 +24,6 @@ export default async function EventsPage() {
   }
 
   let events: Events[] = [];
-  let articles: Articles[] = [];
 
   try {
     const res = await fetch(

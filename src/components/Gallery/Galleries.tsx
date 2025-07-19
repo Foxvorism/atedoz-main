@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { Modal } from "../modal"; // Mengimpor Modal
 import { useModal } from "@/hooks/useModal"; // Menggunakan hook untuk mengelola modal
 import Image from "next/image";
 import Link from "next/link";
@@ -17,21 +16,11 @@ interface CategoriesProps {
 
 const Gallery: React.FC<CategoriesProps> = ({ categories }) => {
   const {
-    isOpen: isModalPhotoOpen,
     openModal: openModalPhoto,
-    closeModal: closeModalPhoto,
   } = useModal(); // Mengelola status modal
-
-  const [selectedPhoto, setSelectedPhoto] = useState<Category | null>(null); // Menyimpan foto yang dipilih
 
   // Menyortir foto berdasarkan id secara descending
   const sortedPhotos = [...categories].sort((a, b) => b.id - a.id);
-
-  // Fungsi untuk menangani klik pada gambar
-  const handlePhotoClick = (photo: Category) => {
-    setSelectedPhoto(photo); // Menyimpan foto yang dipilih
-    openModalPhoto(); // Membuka modal
-  };
 
   return (
     <>

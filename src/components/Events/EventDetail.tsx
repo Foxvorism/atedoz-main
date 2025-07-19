@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react"; // Import useCallback
 import Image from "next/image";
 import axios from "axios";
 
@@ -18,7 +18,7 @@ export default function EventDetail({ id }: { id: number }) {
   });
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
-  const fetchEventById = async () => {
+  const fetchEventById = useCallback(async () => {
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/events/${id}`,
@@ -41,7 +41,8 @@ export default function EventDetail({ id }: { id: number }) {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, [id]); // id is a dependency for fetchEventById
+  // --- End of change ---
 
   function formatTanggalIndo(dateString: string): string {
     if (!dateString) return "-";
@@ -69,7 +70,7 @@ export default function EventDetail({ id }: { id: number }) {
 
   useEffect(() => {
     fetchEventById();
-  }, [id]);
+  }, [id, fetchEventById]); // Include fetchEventById in the dependency array
 
   // Determine photo content status
   const hasPhotos = event.photos && event.photos.length > 0;
@@ -89,7 +90,9 @@ export default function EventDetail({ id }: { id: number }) {
         {!hasPhotos ? ( // Scenario 1: No photos
           <div className="text-center text-gray-500 py-10">Tidak ada konten</div>
         ) : (
-          <div className="flex justify-center items-center mb-8 relative overflow-hidden rounded-xl w-[50%] mx-auto"> {/* Added mx-auto */}
+          <div className="flex justify-center items-center mb-8 relative overflow-hidden rounded-xl w-[50%] mx-auto">
+            {" "}
+            {/* Added mx-auto */}
             <div
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentPhotoIndex * 100}%)` }}

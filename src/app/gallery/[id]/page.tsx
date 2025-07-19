@@ -22,7 +22,6 @@ export default async function GalleryDetailPage({
   const { id } = params;
   let galleries: Gallery[] = [];
   let photos: Photo[] = [];
-  let galleryTitle = "";
 
   try {
     const res = await fetch(
@@ -35,8 +34,6 @@ export default async function GalleryDetailPage({
     if (!res.ok) throw new Error("Gagal mengambil data gallery");
 
     const data: Gallery = await res.json();
-
-    galleryTitle = data.judul;
 
     photos = data.photos.map((photo) => ({
       id: photo.id,
