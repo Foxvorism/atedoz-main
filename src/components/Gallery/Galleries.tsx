@@ -1,6 +1,5 @@
 "use client";
-import React, { useState } from "react";
-import { useModal } from "@/hooks/useModal"; // Menggunakan hook untuk mengelola modal
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -15,9 +14,6 @@ interface CategoriesProps {
 }
 
 const Gallery: React.FC<CategoriesProps> = ({ categories }) => {
-  const {
-    openModal: openModalPhoto,
-  } = useModal(); // Mengelola status modal
 
   // Menyortir foto berdasarkan id secara descending
   const sortedPhotos = [...categories].sort((a, b) => b.id - a.id);
