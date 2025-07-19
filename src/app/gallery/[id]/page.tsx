@@ -1,7 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import GalleryDetail from "@/components/Gallery/GalleryDetail";
-import { NextPage } from "next"; // Import NextPage
 
 interface Photo {
   id: number;
@@ -15,17 +14,15 @@ interface Gallery {
   photos: Photo[];
 }
 
-// Definisikan tipe props untuk halaman Anda
+// Ini tipe params yang dikirim oleh App Router
 interface GalleryDetailPageProps {
   params: {
     id: string;
   };
 }
 
-// Gunakan NextPage dengan tipe props yang Anda definisikan
-const GalleryDetailPage: NextPage<GalleryDetailPageProps> = async ({
-  params,
-}) => {
+// Gunakan function biasa (bukan NextPage) dan langsung menerima props
+export default async function GalleryDetailPage({ params }: GalleryDetailPageProps) {
   const { id } = params;
   let galleries: Gallery[] = [];
   let photos: Photo[] = [];
@@ -70,6 +67,4 @@ const GalleryDetailPage: NextPage<GalleryDetailPageProps> = async ({
       </div>
     </>
   );
-};
-
-export default GalleryDetailPage;
+}
