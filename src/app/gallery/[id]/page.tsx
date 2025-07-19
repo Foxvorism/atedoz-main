@@ -14,15 +14,12 @@ interface Gallery {
   photos: Photo[];
 }
 
-// Ini tipe params yang dikirim oleh App Router
-interface GalleryDetailPageProps {
-  params: {
-    id: string;
-  };
-}
-
-// Gunakan function biasa (bukan NextPage) dan langsung menerima props
-export default async function GalleryDetailPage({ params }: GalleryDetailPageProps) {
+// ✅ Langsung beri typing pada params, tidak perlu buat interface terpisah
+export default async function GalleryDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const { id } = params;
   let galleries: Gallery[] = [];
   let photos: Photo[] = [];
