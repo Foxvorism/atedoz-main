@@ -3,31 +3,32 @@ import React, { useState } from "react";
 import { Modal } from "../modal"; // Mengimpor Modal
 import { useModal } from "@/hooks/useModal"; // Menggunakan hook untuk mengelola modal
 import Image from "next/image";
+import Link from "next/link";
 
-interface Gallery {
+interface Category {
   id: number;
-  foto: string;
-  deskripsi: string;
+  judul: string;
+  thumbnail: string;
 }
 
-interface GalleryProps {
-  galleries: Gallery[];
+interface CategoriesProps {
+  categories: Category[];
 }
 
-const Gallery: React.FC<GalleryProps> = ({ galleries }) => {
+const Gallery: React.FC<CategoriesProps> = ({ categories }) => {
   const {
     isOpen: isModalPhotoOpen,
     openModal: openModalPhoto,
     closeModal: closeModalPhoto,
   } = useModal(); // Mengelola status modal
 
-  const [selectedPhoto, setSelectedPhoto] = useState<Gallery | null>(null); // Menyimpan foto yang dipilih
+  const [selectedPhoto, setSelectedPhoto] = useState<Category | null>(null); // Menyimpan foto yang dipilih
 
   // Menyortir foto berdasarkan id secara descending
-  const sortedPhotos = [...galleries].sort((a, b) => b.id - a.id);
+  const sortedPhotos = [...categories].sort((a, b) => b.id - a.id);
 
   // Fungsi untuk menangani klik pada gambar
-  const handlePhotoClick = (photo: Gallery) => {
+  const handlePhotoClick = (photo: Category) => {
     setSelectedPhoto(photo); // Menyimpan foto yang dipilih
     openModalPhoto(); // Membuka modal
   };
@@ -39,45 +40,32 @@ const Gallery: React.FC<GalleryProps> = ({ galleries }) => {
         <h2 className="text-base font-medium mb-10">
           Berikut adalah foto-foto yang diambil di studio Atedoz Space
         </h2>
+        
         <div className="flex justify-center items-center w-full">
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 w-full">
             {sortedPhotos.map((photo) => (
-              <div
-                key={photo.id}
-                className="relative w-full bg-gray-100 rounded-lg overflow-hidden hover:scale-[102%]"
-                onClick={() => handlePhotoClick(photo)} // Menangani klik gambar
-              >
-                <Image
-                  width={2000} // Tentukan ukuran gambar
-                  height={2000} // Tentukan ukuran gambar
-                  src={photo.foto}
-                  alt={photo.deskripsi ? photo.deskripsi : "Gallery Photo"}
-                  className="w-full h-auto object-cover cursor-pointer rounded-lg aspect-square"
-                />
-              </div>
+              <Link href={`/gallery/${photo.id}`} key={photo.id}>
+                <div
+                  className="relative w-full h-full bg-gray-100 rounded-lg overflow-hidden hover:scale-[102%]"
+                >
+                  <Image
+                    layout="responsive"
+                    width={1000}
+                    height={0}
+                    src={photo.thumbnail}
+                    alt={photo.judul}
+                    unoptimized
+                    className="aspect-video w-full object-cover cursor-pointer"
+                  />
+                  <div className="p-4">
+                    <h2 className="text-xl font-bold mb-3">{photo.judul}</h2>
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
       </div>
-
-      {/* Modal untuk menampilkan gambar yang dipilih */}
-      {isModalPhotoOpen && selectedPhoto && (
-        <Modal
-          isOpen={isModalPhotoOpen}
-          onClose={closeModalPhoto}
-          className="lg:max-w-[40vw] max-w-[85vw]"
-        >
-          <div className="w-full">
-            <Image
-              width={1200}
-              height={1200}
-              src={selectedPhoto.foto}
-              alt={selectedPhoto.deskripsi ? selectedPhoto.deskripsi : "Selected Photo"}
-              className="rounded-xl object-cover w-full h-auto aspect-square"
-            />
-          </div>
-        </Modal>
-      )}
     </>
   );
 };

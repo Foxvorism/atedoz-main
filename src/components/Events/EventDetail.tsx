@@ -9,10 +9,14 @@ export default function EventDetail({ id }: { id: number }) {
     thumbnail: "",
     nama_event: "",
     tanggal_event: "",
-    deskripsi_event: "",
-    longitude: "",
-    latitude: "",
+    photos: [
+      {
+        id: 0,
+        foto: "",
+      },
+    ],
   });
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
   const fetchEventById = async () => {
     try {
@@ -30,14 +34,11 @@ export default function EventDetail({ id }: { id: number }) {
         id: response.data.id,
         thumbnail: response.data.thumbnail || "",
         nama_event: response.data.nama_event || "",
-        deskripsi_event: response.data.deskripsi_event || null,
         tanggal_event: response.data.tanggal_event || "",
-        longitude: response.data.longitude || "",
-        latitude: response.data.latitude || "",
+        photos: response.data.photos || [],
       });
       console.log(response.data);
     } catch (error) {
-      //   handleError(error);
       console.log(error);
     }
   };
@@ -54,18 +55,29 @@ export default function EventDetail({ id }: { id: number }) {
     }).format(date);
   }
 
+  const goToNextPhoto = () => {
+    setCurrentPhotoIndex((prevIndex) =>
+      prevIndex === event.photos.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const goToPrevPhoto = () => {
+    setCurrentPhotoIndex((prevIndex) =>
+      prevIndex === 0 ? event.photos.length - 1 : prevIndex - 1
+    );
+  };
+
   useEffect(() => {
     fetchEventById();
-    console.log("UPDATED_AT RAW:", event.tanggal_event);
   }, [id]);
+
+  // Determine photo content status
+  const hasPhotos = event.photos && event.photos.length > 0;
+  const hasMultiplePhotos = event.photos && event.photos.length > 1;
+  console.log(event);
 
   return (
     <>
-      {/* <ComponentCard title={`Detail of  ${event.nama_event}`} href="/events"> */}
-      {/* <div className="flex justify-end item-center p-5">
-        <button className="bg-black text-white px-5 py3">Back</button>
-      </div> */}
-
       <div className="px-30 py-20">
         <div className="text-center mb-5">
           <h2 className="text-4xl font-bold mb-3">{event.nama_event}</h2>
@@ -74,26 +86,62 @@ export default function EventDetail({ id }: { id: number }) {
           </h2>
         </div>
 
-        <div className="flex justify-center items-center mb-8">
-          <Image
-            layout="intrinsic" // Menggunakan layout intrinsic agar width menyesuaikan dengan height
-            width={300} // Tentukan lebar gambar sebagai referensi rasio
-            height={0}
-            src={`${process.env.NEXT_PUBLIC_BACKEND_HOST}/photos/${event.thumbnail}`}
-            alt={event.thumbnail}
-            className="aspect-video rounded-xl w-[50%] h-full object-cover cursor-pointer"
-          />
-        </div>
-        {/* <div className="text-center mb-5">
-          <h2 className="text-sm font-medium text-gray-800/50">
-            Location : {event.longitude}, {event.latitude}
-          </h2>
-        </div> */}
+        {!hasPhotos ? ( // Scenario 1: No photos
+          <div className="text-center text-gray-500 py-10">Tidak ada konten</div>
+        ) : (
+          <div className="flex justify-center items-center mb-8 relative overflow-hidden rounded-xl w-[50%] mx-auto"> {/* Added mx-auto */}
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentPhotoIndex * 100}%)` }}
+            >
+              {event.photos.map((photo, index) => (
+                <div key={index} className="w-full flex-shrink-0">
+                  <Image
+                    layout="responsive" // Use responsive for better scaling
+                    width={1000}
+                    height={562} // Use an appropriate height to maintain aspect ratio (e.g., 16:9 for 1000 width)
+                    src={`${process.env.NEXT_PUBLIC_BACKEND_HOST}/photos/${photo.foto}`}
+                    alt={`Event photo ${index + 1}`}
+                    unoptimized
+                    className="aspect-video object-cover" // Ensure consistent aspect ratio
+                  />
+                </div>
+              ))}
+            </div>
 
-        <div className="text-center mx-16 ">
-          <p className="text-lg font-medium">{event.deskripsi_event}</p>
-        </div>
-        {/* </ComponentCard> */}
+            {hasMultiplePhotos && ( // Display previous button only if multiple photos
+              <button
+                onClick={goToPrevPhoto}
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 opacity-75 hover:opacity-100 transition-opacity ml-4"
+              >
+                &#10094;
+              </button>
+            )}
+
+            {hasMultiplePhotos && ( // Display next button only if multiple photos
+              <button
+                onClick={goToNextPhoto}
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 opacity-75 hover:opacity-100 transition-opacity mr-4"
+              >
+                &#10095;
+              </button>
+            )}
+
+            {hasMultiplePhotos && ( // Display indicators only if multiple photos
+              <div className="absolute bottom-4 flex space-x-2">
+                {event.photos.map((_, index) => (
+                  <span
+                    key={index}
+                    className={`block w-3 h-3 rounded-full cursor-pointer ${
+                      index === currentPhotoIndex ? "bg-white" : "bg-gray-400"
+                    }`}
+                    onClick={() => setCurrentPhotoIndex(index)}
+                  ></span>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </>
   );

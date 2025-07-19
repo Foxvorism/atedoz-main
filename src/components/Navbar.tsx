@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
     <div>
       {/* Header */}
       <header
-        className="bg-white w-full h-[100px] flex justify-center item-center fixed top-0 left-0 right-0 z-10"
+        className="bg-white w-full h-[100px] flex justify-center item-center fixed top-0 left-0 right-0 z-50"
         style={{
           boxShadow: "0px 4px 10px rgba(0,0,0,0.5)",
         }}

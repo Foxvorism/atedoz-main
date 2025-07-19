@@ -74,7 +74,7 @@ const Package: React.FC = () => {
                     />
 
                     <div className="p-8 text-left truncate">
-                      <h2 className="font-bold text-2xl mb-3">
+                      <h2 className="font-bold text-xl mb-3">
                         {pkg.nama_paket}
                       </h2>
                       {/* Use the formatPrice helper here */}

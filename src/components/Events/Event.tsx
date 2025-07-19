@@ -36,6 +36,7 @@ const Event: React.FC<EventProps> = ({ events }) => {
                   height={0}
                   src={event.thumbnail}
                   alt={event.nama_event}
+                  unoptimized
                   className="aspect-video w-full object-cover cursor-pointer"
                 />
                 <div className="p-4">

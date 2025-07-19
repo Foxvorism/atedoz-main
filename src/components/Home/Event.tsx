@@ -19,46 +19,38 @@ const Event: React.FC<EventProps> = ({ events }) => {
 
   return (
     <>
-      <div className="flex justify-center items-center p-14">
+      <div className="flex justify-center items-center py-14 px-40">
         <div className="text-center">
           <h2 className="font-bold text-3xl mb-10">
             Acara Terkini dari Photobooth
           </h2>
 
-          {/* Horizontal Scrollable Image Section */}
-          {/* Tambahkan `flex-nowrap` untuk mencegah wrapping dan memaksa scroll horizontal */}
-          <div className="w-[60vw] flex flex-nowrap overflow-x-auto space-x-5 py-4">
-            {sortedEvents.map((event) => (
-              <Link href={`/events/detail-event/${event.id}`} key={event.id}>
-                {/* Beri lebar dan tinggi tetap pada container setiap event item */}
-                {/* Tambahkan `flex-shrink-0` agar item tidak menyusut dan mempertahankan lebar tetap */}
-                <div className="w-[300px] h-[700px] flex-shrink-0 bg-gray-100 rounded-lg hover:scale-[102%] cursor-pointer">
-                  <div className="relative w-full h-[550px]">
-                    {" "}
-                    {/* Wrapper untuk gambar dengan tinggi tetap */}
+          <div className="flex justify-center items-center">
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
+              {sortedEvents.map((event) => (
+                <Link href={`/events/detail-event/${event.id}`} key={event.id}>
+                  <div
+                    className="relative w-full h-full bg-gray-100 rounded-lg overflow-hidden hover:scale-[102%]"
+                  >
                     <Image
-                      width={100}
-                      height={100}
+                      layout="responsive"
+                      width={500}
+                      height={0}
                       src={event.thumbnail}
                       alt={event.nama_event}
-                      className="object-cover rounded-t-lg w-full" // Pastikan `object-cover` dan `rounded-t-lg` untuk konsistensi
+                      unoptimized
+                      className="aspect-video w-full object-cover cursor-pointer"
                     />
+                    <div className="p-4">
+                      <h2 className="text-xl font-bold mb-3">{event.nama_event}</h2>
+                      <h3 className="text-gray-400 text-xs">
+                        {event.tanggal_event}
+                      </h3>
+                    </div>
                   </div>
-                  <div className="p-4 text-center">
-                    {" "}
-                    {/* Tambahkan text-left untuk konsistensi */}
-                    <h2 className="text-xl font-bold mb-3">
-                      {" "}
-                      {/* Tambahkan truncate jika nama_event terlalu panjang */}
-                      {event.nama_event}
-                    </h2>
-                    <h3 className="text-gray-400 text-xs">
-                      {event.tanggal_event}
-                    </h3>
-                  </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>

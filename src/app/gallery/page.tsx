@@ -2,34 +2,34 @@ import Navbar from "@/components/Navbar";
 import Galleries from "@/components/Gallery/Galleries";
 import Footer from "@/components/Footer";
 
-interface Gallery {
+interface Category {
   id: number;
-  foto: string;
-  deskripsi: string;
+  judul: string;
+  thumbnail: string;
 }
 
 export default async function GalleryPage() {
-  let galleries: Gallery[] = [];
+  let categories: Category[] = [];
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/galleries`,
+      `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/categories`,
       {
         cache: "no-store",
       }
     );
 
-    if (!res.ok) throw new Error("Gagal mengambil data article");
+    if (!res.ok) throw new Error("Gagal mengambil data Kategori");
 
-    const data: Gallery[] = await res.json();
+    const data: Category[] = await res.json();
 
     // ✅ Transform ke format yang dibutuhkan komponen Article.tsx
-    galleries = data.map((gallery) => ({
-      id: gallery.id,
-      foto: gallery.foto
-        ? `${process.env.NEXT_PUBLIC_BACKEND_HOST}/photos/${gallery.foto}`
+    categories = data.map((category) => ({
+      id: category.id,
+      thumbnail: category.thumbnail
+        ? `${process.env.NEXT_PUBLIC_BACKEND_HOST}/photos/${category.thumbnail}`
         : "/img/default-image.jpg",
-      deskripsi: gallery.deskripsi,
+      judul: category.judul,
     }));
   } catch (error) {
     console.error("Gagal mengambil data:", error);
@@ -39,7 +39,7 @@ export default async function GalleryPage() {
     <>
       <Navbar />
       <div className="mt-[100px]">
-        <Galleries galleries={galleries} />
+        <Galleries categories={categories} />
         <Footer />
       </div>
     </>
