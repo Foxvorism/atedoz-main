@@ -1,145 +1,174 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react"; // Import useCallback
+import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
 import axios from "axios";
 
+// Definisikan tipe di luar komponen agar lebih rapi
+interface Photo {
+  id: number;
+  foto: string;
+}
+
+interface Event {
+  id: number;
+  thumbnail: string;
+  nama_event: string;
+  tanggal_event: string;
+  photos: Photo[];
+}
+
 export default function EventDetail({ id }: { id: number }) {
-  const [event, setEvent] = useState({
-    id: 0,
-    thumbnail: "",
-    nama_event: "",
-    tanggal_event: "",
-    photos: [
-      {
-        id: 0,
-        foto: "",
-      },
-    ],
-  });
+  const [event, setEvent] = useState<Event | null>(null);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
   const fetchEventById = useCallback(async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/events/${id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+        `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/events/${id}`
       );
-
-      setEvent({
-        id: response.data.id,
-        thumbnail: response.data.thumbnail || "",
-        nama_event: response.data.nama_event || "",
-        tanggal_event: response.data.tanggal_event || "",
-        photos: response.data.photos || [],
-      });
-      console.log(response.data);
+      setEvent(response.data);
     } catch (error) {
-      console.log(error);
+      console.log("Gagal mengambil detail event:", error);
     }
-  }, [id]); // id is a dependency for fetchEventById
-  // --- End of change ---
+  }, [id]);
 
-  function formatTanggalIndo(dateString: string): string {
+  useEffect(() => {
+    fetchEventById();
+  }, [fetchEventById]);
+
+  // --- Helper Functions ---
+  const formatTanggalIndo = (dateString: string | undefined): string => {
     if (!dateString) return "-";
     const date = new Date(dateString);
-    if (isNaN(date.getTime())) return "-";
-
     return new Intl.DateTimeFormat("id-ID", {
       day: "2-digit",
       month: "long",
       year: "numeric",
     }).format(date);
-  }
+  };
 
   const goToNextPhoto = () => {
-    setCurrentPhotoIndex((prevIndex) =>
-      prevIndex === event.photos.length - 1 ? 0 : prevIndex + 1
+    if (!event) return;
+    setCurrentPhotoIndex((prev) =>
+      prev === event.photos.length - 1 ? 0 : prev + 1
     );
   };
 
   const goToPrevPhoto = () => {
-    setCurrentPhotoIndex((prevIndex) =>
-      prevIndex === 0 ? event.photos.length - 1 : prevIndex - 1
+    if (!event) return;
+    setCurrentPhotoIndex((prev) =>
+      prev === 0 ? event.photos.length - 1 : prev - 1
     );
   };
 
-  useEffect(() => {
-    fetchEventById();
-  }, [id, fetchEventById]); // Include fetchEventById in the dependency array
+  if (!event) {
+    return <div className="text-center py-20">Loading...</div>;
+  }
 
-  // Determine photo content status
   const hasPhotos = event.photos && event.photos.length > 0;
   const hasMultiplePhotos = event.photos && event.photos.length > 1;
-  console.log(event);
 
   return (
     <>
-      <div className="px-30 py-20">
-        <div className="text-center mb-5">
-          <h2 className="text-4xl font-bold mb-3">{event.nama_event}</h2>
-          <h2 className="text-lg font-normal text-gray-800/50">
+      {/* KUNCI 1: Padding utama dibuat responsif */}
+      <div className="py-10 px-4 sm:py-16 sm:px-6">
+        <div className="text-center mb-8">
+          {/* KUNCI 2: Tipografi dibuat responsif & perbaikan semantik */}
+          <h1 className="text-3xl md:text-4xl font-bold mb-2">
+            {event.nama_event}
+          </h1>
+          <p className="text-base md:text-lg font-normal text-gray-500">
             {formatTanggalIndo(event.tanggal_event)}
-          </h2>
+          </p>
         </div>
 
-        {!hasPhotos ? ( // Scenario 1: No photos
-          <div className="text-center text-gray-500 py-10">Tidak ada konten</div>
+        {!hasPhotos ? (
+          <div className="text-center text-gray-500 py-10">
+            Tidak ada foto untuk event ini.
+          </div>
         ) : (
-          <div className="flex justify-center items-center mb-8 relative overflow-hidden rounded-xl w-[50%] mx-auto">
-            {" "}
-            {/* Added mx-auto */}
-            <div
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentPhotoIndex * 100}%)` }}
-            >
-              {event.photos.map((photo, index) => (
-                <div key={index} className="w-full flex-shrink-0">
-                  <Image
-                    layout="responsive" // Use responsive for better scaling
-                    width={1000}
-                    height={562} // Use an appropriate height to maintain aspect ratio (e.g., 16:9 for 1000 width)
-                    src={`${process.env.NEXT_PUBLIC_BACKEND_HOST}/photos/${photo.foto}`}
-                    alt={`Event photo ${index + 1}`}
-                    unoptimized
-                    className="aspect-video object-cover" // Ensure consistent aspect ratio
-                  />
-                </div>
-              ))}
+          /* KUNCI 3: Lebar slider dibuat responsif */
+          <div className="relative w-full max-w-4xl mx-auto">
+            <div className="relative overflow-hidden rounded-lg shadow-xl">
+              <div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{
+                  transform: `translateX(-${currentPhotoIndex * 100}%)`,
+                }}
+              >
+                {event.photos.map((photo, index) => (
+                  <div key={index} className="w-full flex-shrink-0">
+                    <Image
+                      width={1600}
+                      height={900}
+                      src={`${process.env.NEXT_PUBLIC_BACKEND_HOST}/photos/${photo.foto}`}
+                      alt={`Event photo ${index + 1}`}
+                      unoptimized
+                      className="aspect-video w-full object-cover bg-gray-200"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              {/* Tombol Navigasi Slider */}
+              {hasMultiplePhotos && (
+                <>
+                  <button
+                    onClick={goToPrevPhoto}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-black/40 text-white rounded-full hover:bg-black/60 transition-colors z-10"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.75 19.5 8.25 12l7.5-7.5"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={goToNextPhoto}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-black/40 text-white rounded-full hover:bg-black/60 transition-colors z-10"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                      />
+                    </svg>
+                  </button>
+                </>
+              )}
             </div>
 
-            {hasMultiplePhotos && ( // Display previous button only if multiple photos
-              <button
-                onClick={goToPrevPhoto}
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 opacity-75 hover:opacity-100 transition-opacity ml-4"
-              >
-                &#10094;
-              </button>
-            )}
-
-            {hasMultiplePhotos && ( // Display next button only if multiple photos
-              <button
-                onClick={goToNextPhoto}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 opacity-75 hover:opacity-100 transition-opacity mr-4"
-              >
-                &#10095;
-              </button>
-            )}
-
-            {hasMultiplePhotos && ( // Display indicators only if multiple photos
-              <div className="absolute bottom-4 flex space-x-2">
+            {/* Indikator Titik */}
+            {hasMultiplePhotos && (
+              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 flex space-x-2">
                 {event.photos.map((_, index) => (
-                  <span
+                  <button
                     key={index}
-                    className={`block w-3 h-3 rounded-full cursor-pointer ${
-                      index === currentPhotoIndex ? "bg-white" : "bg-gray-400"
-                    }`}
                     onClick={() => setCurrentPhotoIndex(index)}
-                  ></span>
+                    className={`block w-2.5 h-2.5 rounded-full transition-colors ${
+                      index === currentPhotoIndex
+                        ? "bg-gray-800"
+                        : "bg-gray-300 hover:bg-gray-500"
+                    }`}
+                    aria-label={`Go to photo ${index + 1}`}
+                  ></button>
                 ))}
               </div>
             )}
