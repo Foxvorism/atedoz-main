@@ -1,5 +1,6 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
+// import React, { useState, useEffect, useCallback } from "react";
 import { Modal } from "../modal";
 import { useModal } from "@/hooks/useModal";
 import Image from "next/image";

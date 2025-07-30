@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Home/Hero";
+// import Hero from "@/components/Home/Hero";
 import HeroV2 from "@/components/Home/HeroV2";
-import Atedoz from "@/components/Home/Atedoz";
+// import Atedoz from "@/components/Home/Atedoz";
 import Photobooth from "@/components/Home/Photobooth";
 import Event from "@/components/Home/Event";
 import Package from "@/components/Home/Package";
