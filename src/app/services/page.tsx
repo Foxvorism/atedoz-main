@@ -11,7 +11,7 @@ export default async function Services() {
       <div className="mt-[100px]">
         <div className="flex justify-center items-center bg-white">
           <div className="w-full">
-            <h2 className="text-2xl font-bold mb-10 text-center pt-10 px-30">
+            <h2 className="text-2xl font-bold text-center pt-10 px-30">
               Layanan Kami
             </h2>
 
