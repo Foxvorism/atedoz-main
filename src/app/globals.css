@@ -49,6 +49,19 @@
   background-color: var(--color-brand-500); /* Darker color when hovered */
 }
 
+/* Menambahkan custom utility untuk menyembunyikan scrollbar */
+
+/* Untuk Chrome, Safari, dan Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Untuk IE, Edge, dan Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 *,
 *::before,
 *::after {

@@ -19,30 +19,39 @@ const Event: React.FC<EventProps> = ({ events }) => {
 
   return (
     <>
-      <div className="flex justify-center items-center py-14 px-40">
-        <div className="text-center">
-          <h2 className="font-bold text-3xl mb-10">
+      {/* KUNCI 1: Ganti padding horizontal menjadi responsif */}
+      <div className="flex justify-center items-center py-14 px-4 sm:px-6 md:px-10 lg:px-40">
+        <div className="text-center w-full">
+          {/* KUNCI 2: Buat ukuran font judul menjadi responsif */}
+          <h2 className="font-bold text-2xl md:text-3xl mb-10">
             Acara Terkini dari Photobooth
           </h2>
 
           <div className="flex justify-center items-center">
-            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
+            {/* Grid sudah cukup responsif, hanya disederhanakan sedikit */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
               {sortedEvents.map((event) => (
                 <Link href={`/events/detail-event/${event.id}`} key={event.id}>
+                  {/* KUNCI 3: Tambahkan transisi untuk animasi hover yang mulus */}
                   <div
-                    className="relative w-full h-full bg-gray-100 rounded-lg overflow-hidden hover:scale-[102%]"
+                    className="bg-gray-100 rounded-lg overflow-hidden h-full
+                               hover:scale-[102%] transition-transform duration-300"
                   >
-                    <Image
-                      layout="responsive"
-                      width={500}
-                      height={0}
-                      src={event.thumbnail}
-                      alt={event.nama_event}
-                      unoptimized
-                      className="aspect-video w-full object-cover cursor-pointer"
-                    />
-                    <div className="p-4">
-                      <h2 className="text-xl font-bold mb-3">{event.nama_event}</h2>
+                    {/* Wadah gambar untuk menjaga rasio aspek */}
+                    <div className="relative aspect-video w-full">
+                      <Image
+                        fill
+                        objectFit="cover"
+                        src={event.thumbnail}
+                        alt={event.nama_event}
+                        unoptimized
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    </div>
+                    <div className="p-4 text-left">
+                      <h2 className="text-lg font-bold mb-2">
+                        {event.nama_event}
+                      </h2>
                       <h3 className="text-gray-400 text-xs">
                         {event.tanggal_event}
                       </h3>

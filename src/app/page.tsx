@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Home/Hero";
+import HeroV2 from "@/components/Home/HeroV2";
 import Atedoz from "@/components/Home/Atedoz";
 import Photobooth from "@/components/Home/Photobooth";
 import Event from "@/components/Home/Event";
@@ -61,8 +62,9 @@ export default async function Home() {
     <>
       <Navbar />
       <div className="mt-[100px]">
-        <Hero />
-        <Atedoz />
+        {/* <Hero /> */}
+        <HeroV2 />
+        {/* <Atedoz /> */}
         <Photobooth />
         <Event events={events} />
         <Package />

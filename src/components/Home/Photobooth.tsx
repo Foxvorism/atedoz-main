@@ -12,62 +12,40 @@ const Photobooth: React.FC = () => {
 
   return (
     <>
-      <div className="flex justify-center items-center p-14 bg-[var(--color-gray-2)]">
-        <div className="text-center text-white">
-          <h2 className="font-bold text-3xl mb-10">Photobooth</h2>
-          <p className="text-lg">#BringingFunToEveryFrame.</p>
-          <p className="text-lg mb-8">
-            We are open for collaboration, partnership & rental.
-          </p>
-
-          <Link href="/contact">
-          <div className="mb-8">
-            <button className="px-10 py-3 rounded-md bg-[var(--color-black-2)] hover:scale-[102%] cursor-pointer">
-              Kontak Kami
-            </button>
+      <div className="flex justify-center items-center py-10 px-0 md:py-14 bg-[var(--color-gray-2)]">
+        <div className="text-center text-white w-full">
+          <div className="px-6">
+            <h2 className="font-bold text-2xl md:text-3xl mb-4">Photobooth</h2>
+            <p className="text-base md:text-lg">#BringingFunToEveryFrame.</p>
+            <p className="text-base md:text-lg mb-8">
+              We are open for collaboration, partnership & rental.
+            </p>
+            <Link href="/contact" className="mb-10 inline-block">
+              <button className="px-10 py-3 rounded-md bg-[var(--color-black-2)] hover:scale-[102%] transition-transform duration-200 cursor-pointer">
+                Kontak Kami
+              </button>
+            </Link>
           </div>
-          </Link>
-          <div className="px-[5vw]">
-            <div className="flex flex-row gap-4 overflow-x-auto">
+
+          <div className="w-full lg:flex lg:justify-center">
+            {/* TAMBAHKAN CLASS 'no-scrollbar' DI SINI */}
+            <div className="flex flex-row items-start gap-4 overflow-x-auto pb-4 px-6 lg:px-0 lg:overflow-visible no-scrollbar">
               {photo.map((photo) => (
                 <div
                   key={photo.id}
-                  className="relative rounded-lg overflow-hidden aspect-[4/5] min-w-[216px] max-w-[350px] flex-shrink-0"
-                  style={{ width: "350px", height: "437.5px" }} // 1080/4=270, 1350/4=337.5
+                  className="relative rounded-lg overflow-hidden aspect-[4/5] w-[75vw] sm:w-[350px] flex-shrink-0"
                 >
                   <Image
-                    layout="fill"
+                    fill
                     objectFit="cover"
                     src={photo.src}
                     alt={photo.alt}
+                    sizes="(max-width: 640px) 75vw, 350px"
                   />
                 </div>
               ))}
             </div>
           </div>
-
-          {/* <div className="flex justify-center items-center gap-10">
-            <div className="w-[35vw] h-[35vh] bg-white p-2 flex justify-center items-center">
-              <Image
-layout="intrinsic"
-width={100} // Tentukan ukuran gambar
-height={100} // Tentukan ukuran gambar
-                src="/img/HomePhotobooth1.png"
-                alt="HomePhotobooth1"
-                className="w-auto"
-              />
-            </div>
-            <div className="w-[35vw] h-[35vh] bg-white p-2 flex justify-center items-center">
-              <Image
-layout="intrinsic"
-width={100} // Tentukan ukuran gambar
-height={100} // Tentukan ukuran gambar
-                src="/img/HomePhotobooth2.png"
-                alt="img/HomePhotobooth2.png"
-                className="w-full"
-              />
-            </div>
-          </div> */}
         </div>
       </div>
     </>
