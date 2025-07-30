@@ -1,34 +1,130 @@
-'use client';
-import Link from "next/link";
-import Image from "next/image";
+"use client";
 import React, { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 
+// --- Tipe Data ---
+interface ContactOption {
+  id: number;
+  name: string;
+  contact?: string;
+  logo: string;
+  link?: string;
+  type?: "link" | "popup";
+  popupType?: "wa" | "ig";
+}
+
+interface PopupOption {
+  id: number;
+  name: string;
+  contact: string;
+  logo: string;
+  link: string;
+}
+
+// --- Komponen Popup ---
+const PopupModal: React.FC<{
+  options: PopupOption[];
+  onClose: () => void;
+}> = ({ options, onClose }) => (
+  <div
+    className="fixed inset-0 bg-black/70 flex justify-center items-center z-50 p-4"
+    onClick={onClose}
+  >
+    <div
+      className="bg-white text-black w-full max-w-lg p-6 rounded-lg shadow-xl relative"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        onClick={onClose}
+        className="absolute top-3 right-3 text-gray-400 hover:text-gray-800"
+        aria-label="Tutup"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={2.5}
+          stroke="currentColor"
+          className="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6 18 18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+      <h3 className="text-xl font-bold text-center mb-6">Pilih Opsi Kontak</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {options.map((option) => (
+          <a
+            key={option.id}
+            href={option.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block bg-[var(--color-black-2)] text-white p-5 rounded-lg text-center hover:scale-105 transition-colors"
+          >
+            <Image
+              width={40}
+              height={40}
+              src={option.logo}
+              alt={option.name}
+              className="w-10 h-10 mx-auto mb-3"
+            />
+            <p className="font-bold text-base mb-1">{option.name}</p>
+            <p className="text-sm ">{option.contact}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+);
+
+// --- Komponen Kartu Kontak ---
+const ContactCard: React.FC<{ contact: ContactOption }> = ({ contact }) => (
+  // KUNCI 1: Mengembalikan warna background ke variabel asli Anda
+  <div className="bg-[var(--color-black-2)] text-white p-6 rounded-lg cursor-pointer h-full flex flex-col justify-center items-center transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+    <Image
+      width={50}
+      height={50}
+      src={contact.logo}
+      alt={contact.name}
+      className="w-12 h-12 mb-4"
+    />
+    <h3 className="text-lg font-bold">{contact.name}</h3>
+    <p className="text-sm text-gray-300">{contact.contact}</p>
+  </div>
+);
+
+// --- Komponen Utama ---
 const Contact: React.FC = () => {
-  const [showWaPopup, setShowWaPopup] = useState(false);
-  const [showIgPopup, setShowIgPopup] = useState(false);
+  const [activePopup, setActivePopup] = useState<"wa" | "ig" | null>(null);
 
-  const mainContacts = [
+  const mainContacts: ContactOption[] = [
     {
       id: 1,
       logo: "/icon/email.svg",
       name: "Email",
       contact: "atedozspace@gmail.com",
-      link: "https://mail.google.com/mail/?view=cm&fs=1&to=atedozspace@gmail.com",
+      link: "mailto:atedozspace@gmail.com",
       type: "link",
     },
     {
       id: 2,
       logo: "/icon/wa.svg",
-      name: "WhatsApp", // Nama diganti menjadi 'WhatsApp' umum
-      contact: "Pilih WhatsApp", // Teks untuk memicu popup
-      type: "popup wa", // Tipe baru untuk menandakan ini akan memicu popup
+      name: "WhatsApp",
+      contact: "Pilih Opsi",
+      type: "popup",
+      popupType: "wa",
     },
     {
       id: 3,
       logo: "/icon/ig.svg",
       name: "Instagram",
-      contact: "pilih IG",
-      type: "popup ig",
+      contact: "Pilih Akun",
+      type: "popup",
+      popupType: "ig",
     },
     {
       id: 4,
@@ -40,7 +136,7 @@ const Contact: React.FC = () => {
     },
   ];
 
-  const waOptions = [
+  const waOptions: PopupOption[] = [
     {
       id: 1,
       name: "WA Photobooth",
@@ -51,224 +147,70 @@ const Contact: React.FC = () => {
     {
       id: 2,
       name: "WA Photo Studio",
-      contact: "+62 852-1980-5200", 
+      contact: "+62 852-1980-5200",
       logo: "/icon/wa.svg",
       link: "https://wa.me/6285219805200",
     },
   ];
 
-  const igOptions = [
+  const igOptions: PopupOption[] = [
     {
       id: 1,
       name: "IG Photobooth",
-      contact: "@atedozphotobooth",
+      contact: "@atedoz.space",
       logo: "/icon/ig.svg",
       link: "https://www.instagram.com/atedoz.space/",
     },
     {
       id: 2,
       name: "IG Photo Studio",
-      contact: "@atedozphotobooth", 
+      contact: "@atedoz.studio",
       logo: "/icon/ig.svg",
-      link: "https://www.instagram.com/atedoz.space/",
+      link: "https://www.instagram.com/atedoz.studio/",
     },
   ];
 
-  const handleWaClick = () => {
-    setShowWaPopup(true);
-  };
-
-  const handleIgClick = () => {
-    setShowIgPopup(true);
-  };
-
-  const handleClosePopup = () => {
-    setShowWaPopup(false);
-    setShowIgPopup(false);
+  const handleContactClick = (contact: ContactOption) => {
+    if (contact.type === "popup" && contact.popupType) {
+      setActivePopup(contact.popupType);
+    }
   };
 
   return (
     <>
-      <div className="p-14 w-full text-center px-50">
-        <h2 className="text-2xl font-bold mb-3">Kontak Kami</h2>
-        <h2 className="text-base font-medium mb-10">
-          Tekan pilihan kontak dibawah untuk langsung menghubungi
-        </h2>
+      <div className="w-full text-center py-16 px-4 sm:px-6">
+        <h1 className="text-3xl font-bold mb-3 md:text-4xl">Kontak Kami</h1>
+        <p className="text-base text-gray-600 mb-12 max-w-xl mx-auto">
+          Tekan pilihan kontak di bawah untuk langsung menghubungi kami melalui
+          platform favorit Anda.
+        </p>
         <div className="flex justify-center items-center">
-          {/* Ubah grid-cols menjadi 4 atau sesuaikan dengan keinginan Anda */}
-          <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-10">
+          {/* KUNCI 2: Grid diubah agar 1 kolom di mobile */}
+          <div className="w-full max-w-5xl grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {mainContacts.map((contact) => (
-              <React.Fragment key={contact.id}>
+              <div key={contact.id} onClick={() => handleContactClick(contact)}>
                 {contact.type === "link" ? (
                   <Link
                     href={contact.link as string}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <div className="bg-[var(--color-black-2)] py-10 rounded-lg cursor-pointer hover:scale-[103%]">
-                      <div className="flex justify-center">
-                        <Image
-                          layout="intrinsic"
-                          width={60}
-                          height={60}
-                          src={contact.logo}
-                          alt={contact.name}
-                          className="h-15 mb-8"
-                        />
-                      </div>
-                      <div className="text-center text-white">
-                        <h2 className="text-xl font-bold mb-3">
-                          {contact.name}
-                        </h2>
-                        <h2 className="text-[14px]">{contact.contact}</h2>
-                      </div>
-                    </div>
+                    <ContactCard contact={contact} />
                   </Link>
-                ) : contact.type === "popup ig" ? (
-                  <div
-                    className="bg-[var(--color-black-2)] py-10 rounded-lg cursor-pointer hover:scale-[103%]"
-                    onClick={handleIgClick}
-                  >
-                    <div className="flex justify-center">
-                      <Image
-                        layout="intrinsic"
-                        width={60}
-                        height={60}
-                        src={contact.logo}
-                        alt={contact.name}
-                        className="h-15 mb-8"
-                      />
-                    </div>
-                    <div className="text-center text-white">
-                      <h2 className="text-xl font-bold mb-3">
-                        {contact.name}
-                      </h2>
-                      <h2 className="text-[14px]">{contact.contact}</h2>
-                    </div>
-                  </div>
                 ) : (
-                  <div
-                    className="bg-[var(--color-black-2)] py-10 rounded-lg cursor-pointer hover:scale-[103%]"
-                    onClick={handleWaClick}
-                  >
-                    <div className="flex justify-center">
-                      <Image
-                        layout="intrinsic"
-                        width={60}
-                        height={60}
-                        src={contact.logo}
-                        alt={contact.name}
-                        className="h-15 mb-8"
-                      />
-                    </div>
-                    <div className="text-center text-white">
-                      <h2 className="text-xl font-bold mb-3">
-                        {contact.name}
-                      </h2>
-                      <h2 className="text-[14px]">{contact.contact}</h2>
-                    </div>
-                  </div>
+                  <ContactCard contact={contact} />
                 )}
-              </React.Fragment>
+              </div>
             ))}
           </div>
         </div>
       </div>
 
-      {showWaPopup && (
-        <div
-          className="fixed inset-0 bg-black/60 bg-opacity-70 flex justify-center items-center z-50"
-          onClick={handleClosePopup} // Menutup popup saat klik di luar kotak
-        >
-          <div
-            className="w-1/2 p-8 rounded-lg shadow-lg relative"
-            onClick={(e) => e.stopPropagation()} // Mencegah klik di dalam popup menutupnya
-          >
-            <button
-              onClick={handleClosePopup}
-              className="absolute top-2 right-2 text-white text-2xl font-bold"
-            >
-              &times;
-            </button>
-            <div className="w-full grid grid-cols-2 gap-20">
-              {waOptions.map((option) => (
-                <Link
-                  key={option.id}
-                  href={option.link as string}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div className="bg-[var(--color-black-2)] py-10 rounded-lg cursor-pointer hover:scale-[103%]">
-                    <div className="flex justify-center">
-                      <Image
-                        layout="intrinsic"
-                        width={60}
-                        height={60}
-                        src={option.logo}
-                        alt={option.name}
-                        className="h-15 mb-8"
-                      />
-                    </div>
-                    <div className="text-center text-white">
-                      <h2 className="text-xl font-bold mb-3">
-                        {option.name}
-                      </h2>
-                      <h2 className="text-[14px]">{option.contact}</h2>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
+      {activePopup === "wa" && (
+        <PopupModal options={waOptions} onClose={() => setActivePopup(null)} />
       )}
-
-      {showIgPopup && (
-        <div
-          className="fixed inset-0 bg-black/60 bg-opacity-70 flex justify-center items-center z-50"
-          onClick={handleClosePopup} // Menutup popup saat klik di luar kotak
-        >
-          <div
-            className="w-1/2 p-8 rounded-lg shadow-lg relative"
-            onClick={(e) => e.stopPropagation()} // Mencegah klik di dalam popup menutupnya
-          >
-            <button
-              onClick={handleClosePopup}
-              className="absolute top-2 right-2 text-white text-2xl font-bold"
-            >
-              &times;
-            </button>
-            <div className="w-full grid grid-cols-2 gap-20">
-              {igOptions.map((option) => (
-                <Link
-                  key={option.id}
-                  href={option.link as string}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div className="bg-[var(--color-black-2)] py-10 rounded-lg cursor-pointer hover:scale-[103%]">
-                    <div className="flex justify-center">
-                      <Image
-                        layout="intrinsic"
-                        width={60}
-                        height={60}
-                        src={option.logo}
-                        alt={option.name}
-                        className="h-15 mb-8"
-                      />
-                    </div>
-                    <div className="text-center text-white">
-                      <h2 className="text-xl font-bold mb-3">
-                        {option.name}
-                      </h2>
-                      <h2 className="text-[14px]">{option.contact}</h2>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
+      {activePopup === "ig" && (
+        <PopupModal options={igOptions} onClose={() => setActivePopup(null)} />
       )}
     </>
   );
