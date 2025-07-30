@@ -44,7 +44,7 @@ const Package: React.FC = () => {
   return (
     <>
       {/* KUNCI 1: Padding utama dibuat responsif */}
-      <div className="flex justify-center items-center py-14 px-4 sm:px-6 md:px-10 lg:px-40">
+      <div className="flex justify-center items-center py-14 px-4 sm:px-8 lg:px-14">
         <div className="text-center w-full">
           {/* KUNCI 2: Ukuran font judul dibuat responsif */}
           <h2 className="font-bold text-2xl md:text-3xl mb-10">
@@ -52,7 +52,7 @@ const Package: React.FC = () => {
           </h2>
 
           {/* KUNCI 3: HAPUS div dengan px-[20vw]. Grid diletakkan langsung di sini */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10 mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 mb-10 max-w-4xl mx-auto">
             {packages.map((pkg) => (
               <Link href={`https://wa.me/6285219805200`} key={pkg.id}>
                 <div
