@@ -1,7 +1,7 @@
 "use client";
-import React, { useState } from "react";
-import { Modal } from "../modal"; // Mengimpor Modal
-import { useModal } from "@/hooks/useModal"; // Menggunakan hook untuk mengelola modal
+import React, { useState, useEffect, useCallback } from "react";
+import { Modal } from "../modal";
+import { useModal } from "@/hooks/useModal";
 import Image from "next/image";
 
 interface Photo {
@@ -25,48 +25,56 @@ const Gallery: React.FC<GalleryProps> = ({ galleries }) => {
     isOpen: isModalPhotoOpen,
     openModal: openModalPhoto,
     closeModal: closeModalPhoto,
-  } = useModal(); // Mengelola status modal
+  } = useModal();
 
-  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null); // Menyimpan foto yang dipilih
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
-  // Menyortir foto berdasarkan id secara descending
-  const sortedPhotos = galleries.flatMap(gallery => gallery.photos).sort((a, b) => b.id - a.id);
+  // Menggabungkan semua foto dari semua galeri dan menyortirnya
+  const sortedPhotos = galleries
+    .flatMap((gallery) => gallery.photos)
+    .sort((a, b) => b.id - a.id);
 
-  // Fungsi untuk menangani klik pada gambar
   const handlePhotoClick = (photo: Photo) => {
-    setSelectedPhoto(photo); // Menyimpan foto yang dipilih
-    openModalPhoto(); // Membuka modal
+    setSelectedPhoto(photo);
+    openModalPhoto();
   };
 
   return (
     <>
-      <div className="p-14 w-full text-center px-50">
-        <h2 className="text-2xl font-bold mb-3">{galleries[0]?.judul}</h2>
-        <h2 className="text-base font-medium mb-10">
-        </h2>
+      {/* KUNCI 1: Padding utama dibuat responsif dan valid */}
+      <div className="w-full text-center py-16 px-4 sm:px-6 md:px-8">
+        {/* Menggunakan judul generik karena menampilkan semua foto */}
+        <h1 className="text-3xl font-bold mb-3 md:text-4xl">Galeri Foto</h1>
+        <p className="text-base text-gray-600 mb-12 max-w-xl mx-auto">
+          Jelajahi momen-momen tak terlupakan yang diabadikan di Atedoz Space.
+        </p>
+
         <div className="flex justify-center items-center w-full">
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 w-full">
+          {/* KUNCI 2: Grid dibuat lebih adaptif untuk berbagai ukuran layar */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-7xl">
             {sortedPhotos.map((photo) => (
               <div
                 key={photo.id}
-                className="relative w-full bg-gray-100 rounded-lg overflow-hidden hover:scale-[102%]"
-                onClick={() => handlePhotoClick(photo)} // Menangani klik gambar
+                className="relative w-full bg-gray-100 rounded-lg overflow-hidden cursor-pointer group"
+                onClick={() => handlePhotoClick(photo)}
               >
                 <Image
-                  width={2000} // Tentukan ukuran gambar
-                  height={2000} // Tentukan ukuran gambar
+                  width={500}
+                  height={500}
                   src={photo.foto}
-                  alt={photo.deskripsi ? photo.deskripsi : "Gallery Photo"}
+                  alt={photo.deskripsi || "Gallery Photo"}
                   unoptimized
-                  className="w-full h-auto object-cover cursor-pointer rounded-lg aspect-square"
+                  className="w-full h-full object-cover aspect-square transition-transform duration-300 group-hover:scale-105"
                 />
+                {/* Overlay saat hover */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300"></div>
               </div>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Modal untuk menampilkan gambar yang dipilih */}
+      {/* Modal untuk menampilkan gambar (sudah responsif) */}
       {isModalPhotoOpen && selectedPhoto && (
         <Modal
           isOpen={isModalPhotoOpen}
@@ -78,7 +86,7 @@ const Gallery: React.FC<GalleryProps> = ({ galleries }) => {
               width={1200}
               height={1200}
               src={selectedPhoto.foto}
-              alt={selectedPhoto.deskripsi ? selectedPhoto.deskripsi : "Selected Photo"}
+              alt={selectedPhoto.deskripsi || "Selected Photo"}
               unoptimized
               className="rounded-xl object-cover w-full h-auto aspect-square"
             />

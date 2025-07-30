@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,36 +13,38 @@ interface CategoriesProps {
 }
 
 const Gallery: React.FC<CategoriesProps> = ({ categories }) => {
-
-  // Menyortir foto berdasarkan id secara descending
   const sortedPhotos = [...categories].sort((a, b) => b.id - a.id);
 
   return (
     <>
-      <div className="p-14 w-full text-center px-50">
-        <h2 className="text-2xl font-bold mb-3">Gallery</h2>
-        <h2 className="text-base font-medium mb-10">
+      {/* KUNCI 1: Ganti padding menjadi responsif dan valid */}
+      <div className="w-full text-center py-16 px-4 sm:px-6 md:px-8">
+        <h1 className="text-3xl font-bold mb-3 md:text-4xl">Gallery</h1>
+        {/* KUNCI 2: Ganti h2 menjadi p dan batasi lebarnya agar mudah dibaca */}
+        <p className="text-base text-gray-600 mb-12 max-w-xl mx-auto">
           Berikut adalah foto-foto yang diambil di studio Atedoz Space
-        </h2>
-        
+        </p>
+
         <div className="flex justify-center items-center w-full">
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 w-full">
+          {/* KUNCI 3: Grid dibuat 1 kolom di mobile, lalu 2, dan 3 di layar lebih besar */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-7xl">
             {sortedPhotos.map((photo) => (
               <Link href={`/gallery/${photo.id}`} key={photo.id}>
-                <div
-                  className="relative w-full h-full bg-gray-100 rounded-lg overflow-hidden hover:scale-[102%]"
-                >
-                  <Image
-                    layout="responsive"
-                    width={1000}
-                    height={0}
-                    src={photo.thumbnail}
-                    alt={photo.judul}
-                    unoptimized
-                    className="aspect-video w-full object-cover cursor-pointer"
-                  />
-                  <div className="p-4">
-                    <h2 className="text-xl font-bold mb-3">{photo.judul}</h2>
+                <div className="relative w-full h-full bg-gray-100 rounded-lg overflow-hidden shadow-md hover:shadow-xl hover:scale-[102%] transition-all duration-300">
+                  <div className="relative aspect-video w-full">
+                    <Image
+                      fill
+                      objectFit="cover"
+                      src={photo.thumbnail}
+                      alt={photo.judul}
+                      unoptimized
+                      className="bg-gray-200"
+                    />
+                  </div>
+                  <div className="p-5 text-left">
+                    <h3 className="text-xl font-bold text-gray-900">
+                      {photo.judul}
+                    </h3>
                   </div>
                 </div>
               </Link>
