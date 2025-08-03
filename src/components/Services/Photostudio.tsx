@@ -47,16 +47,16 @@ const Photostudio: React.FC = () => {
           </div>
         </div>
 
-        {/* KUNCI: Mengadopsi struktur horizontal scroll dari komponen Photobooth */}
-        <div className="w-full lg:flex lg:justify-center">
-          {/* Container yang bisa di-scroll dengan class 'no-scrollbar' */}
-          <div className="flex flex-row items-stretch gap-4 overflow-x-auto pb-4 px-4 sm:px-6 lg:px-0 lg:overflow-visible no-scrollbar">
+        {/* Wrapper luar tidak berubah */}
+        <div className="w-full max-w-6xl">
+          {/* KUNCI 1: Container diubah dari flex menjadi grid di layar besar (lg) */}
+          <div className="flex flex-row items-stretch gap-4 overflow-x-auto pb-4 px-4 sm:px-6 lg:grid lg:grid-cols-4 lg:gap-6 lg:px-0 no-scrollbar">
             {packages.map((pkg) => (
               <Link
                 href={`https://wa.me/6285219805200`}
                 key={pkg.id}
-                // KUNCI: Ukuran kartu dibuat responsif, mirip seperti Photobooth
-                className="block w-[70vw] sm:w-[300px] flex-shrink-0"
+                // KUNCI 2: Ukuran kartu di-reset di layar besar agar mengikuti grid
+                className="block w-[70vw] sm:w-[300px] flex-shrink-0 lg:w-auto"
               >
                 <div className="relative w-full h-full flex flex-col rounded-xl overflow-hidden bg-gray-100 text-black transition-transform duration-300 hover:scale-105">
                   {/* Bagian Gambar */}
