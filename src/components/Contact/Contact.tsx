@@ -178,7 +178,7 @@ const Contact: React.FC = () => {
       name: "Tiktok Photobooth",
       contact: "@atedoz.space",
       logo: "/icon/tiktok.svg",
-      link: "https://www.tiktok.com/@atedoz.space?_t=ZS-8zAP3yER9jr&_r=1",
+      link: "https://www.tiktok.com/@atedozphotobooth",
     },
     {
       id: 2,
