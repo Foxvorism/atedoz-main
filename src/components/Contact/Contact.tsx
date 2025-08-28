@@ -11,7 +11,7 @@ interface ContactOption {
   logo: string;
   link?: string;
   type?: "link" | "popup";
-  popupType?: "wa" | "ig";
+  popupType?: "wa" | "ig" | "tiktok";
 }
 
 interface PopupOption {
@@ -99,7 +99,9 @@ const ContactCard: React.FC<{ contact: ContactOption }> = ({ contact }) => (
 
 // --- Komponen Utama ---
 const Contact: React.FC = () => {
-  const [activePopup, setActivePopup] = useState<"wa" | "ig" | null>(null);
+  const [activePopup, setActivePopup] = useState<"wa" | "ig" | "tiktok" | null>(
+    null
+  );
 
   const mainContacts: ContactOption[] = [
     {
@@ -130,9 +132,9 @@ const Contact: React.FC = () => {
       id: 4,
       logo: "/icon/tiktok.svg",
       name: "Tiktok",
-      contact: "@atedozphotobooth",
-      link: "https://www.tiktok.com/@atedozphotobooth",
-      type: "link",
+      contact: "Pilih Akun",
+      type: "popup",
+      popupType: "tiktok",
     },
   ];
 
@@ -159,14 +161,31 @@ const Contact: React.FC = () => {
       name: "IG Photobooth",
       contact: "@atedoz.space",
       logo: "/icon/ig.svg",
-      link: "https://www.instagram.com/atedoz.space/",
+      link: "https://www.instagram.com/atedoz.photobooth?igsh=dzdoMDg0bGMyMjA2",
     },
     {
       id: 2,
       name: "IG Photo Studio",
       contact: "@atedoz.studio",
       logo: "/icon/ig.svg",
-      link: "https://www.instagram.com/atedoz.studio/",
+      link: "https://www.instagram.com/atedoz.space?igsh=M3hucXhkN24xODNy",
+    },
+  ];
+
+  const tiktokOptions: PopupOption[] = [
+    {
+      id: 1,
+      name: "Tiktok Photobooth",
+      contact: "@atedoz.space",
+      logo: "/icon/tiktok.svg",
+      link: "https://www.tiktok.com/@atedoz.space?_t=ZS-8zAP3yER9jr&_r=1",
+    },
+    {
+      id: 2,
+      name: "Tiktok Photo Studio",
+      contact: "@atedoz.studio",
+      logo: "/icon/tiktok.svg",
+      link: "https://www.tiktok.com/@atedoz.space?_t=ZS-8zAP3yER9jr&_r=1",
     },
   ];
 
@@ -211,6 +230,12 @@ const Contact: React.FC = () => {
       )}
       {activePopup === "ig" && (
         <PopupModal options={igOptions} onClose={() => setActivePopup(null)} />
+      )}
+      {activePopup === "tiktok" && (
+        <PopupModal
+          options={tiktokOptions}
+          onClose={() => setActivePopup(null)}
+        />
       )}
     </>
   );

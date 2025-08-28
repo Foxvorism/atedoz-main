@@ -43,9 +43,9 @@ const Photobooth: React.FC = () => {
               <Image
                 width={500}
                 height={500}
-                src="/img/services/photobooth2.jpg"
+                src="/img/services/photobooth3.png"
                 alt="Photobooth"
-                className="aspect-square w-full max-w-md object-cover rounded-lg shadow-lg"
+                className="aspect-[3/4] w-full max-w-md object-cover rounded-lg shadow-lg"
               />
             </div>
           </div>
