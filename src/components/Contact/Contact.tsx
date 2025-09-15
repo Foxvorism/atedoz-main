@@ -158,34 +158,34 @@ const Contact: React.FC = () => {
   const igOptions: PopupOption[] = [
     {
       id: 1,
-      name: "IG Photobooth",
+      name: "IG Photo Studio",
       contact: "@atedoz.space",
       logo: "/icon/ig.svg",
-      link: "https://www.instagram.com/atedoz.photobooth?igsh=dzdoMDg0bGMyMjA2",
+      link: "https://www.instagram.com/atedoz.space?igsh=M3hucXhkN24xODNy",
     },
     {
       id: 2,
-      name: "IG Photo Studio",
-      contact: "@atedoz.studio",
+      name: "IG Photobooth",
+      contact: "@atedoz.photobooth",
       logo: "/icon/ig.svg",
-      link: "https://www.instagram.com/atedoz.space?igsh=M3hucXhkN24xODNy",
+      link: "https://www.instagram.com/atedoz.photobooth?igsh=dzdoMDg0bGMyMjA2",
     },
   ];
 
   const tiktokOptions: PopupOption[] = [
     {
       id: 1,
-      name: "Tiktok Photobooth",
+      name: "Tiktok Photo Studio",
       contact: "@atedoz.space",
       logo: "/icon/tiktok.svg",
-      link: "https://www.tiktok.com/@atedozphotobooth",
+      link: "https://www.tiktok.com/@atedoz.space?_t=ZS-8zAP3yER9jr&_r=1",
     },
     {
       id: 2,
-      name: "Tiktok Photo Studio",
-      contact: "@atedoz.studio",
+      name: "Tiktok Photobooth",
+      contact: "@atedozphotobooth",
       logo: "/icon/tiktok.svg",
-      link: "https://www.tiktok.com/@atedoz.space?_t=ZS-8zAP3yER9jr&_r=1",
+      link: "https://www.tiktok.com/@atedozphotobooth",
     },
   ];
 
